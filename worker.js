@@ -25,9 +25,14 @@ const OWNER_KEY = "";
 
 /* ============================================================
  * Octave pocket — Cloudflare Worker relay — worker.js
- * BUILD: op service 1.0 (the current one-and-only build)
+ * BUILD: op service 1.1 (2026-10-01 — Turbopack hydration shim, real
+ *   navigation on token docs, cookie hygiene, quoted-URL healing; and
+ *   per-host CF-cookie scoping so a managed challenge this relay's
+ *   egress trips can actually be solved through it).
  *   Deploy check: /__status on the worker URL must answer
- *   "op service 1.0".
+ *   "op service 1.1" (build 2026-10-01). If it answers 1.0 the OLD
+ *   worker is still live — buttons render but every screen stays
+ *   blank, because React never mounts on the pre-fix runtime.
  * ------------------------------------------------------------
  * WHAT THIS DOES (v5 — the "no-navigation" architecture)
  *   The phone's browser NEVER opens this worker as a web page.
@@ -163,7 +168,8 @@ const OWNER_KEY = "";
  *     /__session (or the pocket's Forget button) resets it.
  *     With OWNER_KEY set the relay answers to the key alone.
  * ============================================================ */
-const VERSION = 'op service 1.0';
+const VERSION = 'op service 1.1';
+const BUILD = '2026-10-01';
 
 /* Octave first-party family (suffix match — covers subdomains) */
 const ALLOW = [
@@ -371,12 +377,26 @@ const PATCH_JS = [
 "    var loc = {};",
 "    Object.defineProperty(loc, 'href', {",
 "      get: function () { return LOC.u ? LOC.u.href : (DOC || 'about:srcdoc'); },",
-"      set: function (v) { nav(v); return v; },",
+"      set: function (v) {",
+"        if (SD) { nav(v); return v; }",
+"        /* v6.8: worker-served document — perform the REAL navigation */",
+"        try { location.href = mapUrl(String(v)); return v; } catch (eNR) { /* fall through */ }",
+"        location.href = v; return v;",
+"      },",
 "      configurable: true",
 "    });",
-"    loc.assign = function (v) { nav(v); };",
-"    loc.replace = function (v) { nav(v); };",
-"    loc.reload = function () { up({ type: 'reloadreq' }); };",
+"    loc.assign = function (v) {",
+"      if (SD) return nav(v);",
+"      try { return location.assign(mapUrl(String(v))); } catch (eNA) { return location.assign(v); }",
+"    };",
+"    loc.replace = function (v) {",
+"      if (SD) return nav(v);",
+"      try { return location.replace(mapUrl(String(v))); } catch (eNR2) { return location.replace(v); }",
+"    };",
+"    loc.reload = function () {",
+"      if (SD) return up({ type: 'reloadreq' });",
+"      location.reload();",
+"    };",
 "    loc.toString = function () { return LOC.u ? LOC.u.href : (DOC || 'about:srcdoc'); };",
 "    ['origin', 'protocol', 'host', 'hostname', 'port', 'pathname', 'search', 'hash'].forEach(function (k) {",
 "      try {",
@@ -391,7 +411,9 @@ const PATCH_JS = [
 "    });",
 "    return loc;",
 "  }",
-"  if (SD) {",
+"  if (TOK) { /* v6.8: the served-JS location rewrite targets __zaiLoc",
+"    in BOTH sandbox and worker-served documents — install it whenever",
+"    this doc was served through a token; only the WRITE paths differ. */",
 "    try { window.__zaiLoc = makeLoc(); } catch (eL) { /* ignore */ }",
 "    /* document.URL / baseURI / documentURI \u2014 the parser reports",
 "     * about:srcdoc; SPA hydration wants the real upstream URL. These",
@@ -490,6 +512,90 @@ const PATCH_JS = [
 "    return t ? '/__t/' + t : null;",
 "  }",
 "",
+"  /* ---------- v6.8: opaque token decode (inverse of encTok) ---------- */",
+"  function decTok(t) {",
+"    try {",
+"      if (!KEY || !t) return null;",
+"      var b64 = String(t).replace(/-/g, '+').replace(/_/g, '/');",
+"      while (b64.length % 4) b64 += '=';",
+"      var s = atob(b64);",
+"      var bytes = new Uint8Array(s.length);",
+"      for (var i = 0; i < s.length; i++) bytes[i] = s.charCodeAt(i) ^ KEY.charCodeAt(i % KEY.length);",
+"      return new TextDecoder().decode(bytes);",
+"    } catch (e) { return null; }",
+"  }",
+"",
+"  /* ---------- v6.8: Turbopack chunk-key normalizer ---------------------",
+"   * Next.js (Turbopack) chunks register themselves by pushing",
+"   * [scriptElement, moduleIds..., factory] onto globalThis.TURBOPACK;",
+"   * the runtime awaits each chunk under the key '/_next/' + path — i.e.",
+"   * the RAW src attribute the page shipped with. Our rewriting serves",
+"   * those scripts with token URLs, so the runtime's wait-key NEVER",
+"   * resolves and hydration deadlocks silently (no error, no mount).",
+"   * Fix: intercept the TURBOPACK queue and swap every script element",
+"   * for a {src: <recovered original path>} stand-in — the runtime reads",
+"   * it via getAttribute('src') / .src, and the keys line up again.",
+"   * Path recovery: strip the worker origin + /__o/<otok> prefix, or",
+"   * decode a /__t/<token>, back to the upstream root-relative path. */",
+"  function tpRecoverPath(raw) {",
+"    try {",
+"      var s = String(raw || '');",
+"      if (!s) return null;",
+"      var m = s.match(/^(?:https?:\\/\\/[^\\/]+)?\\/__o\\/([A-Za-z0-9_-]+)([\\/?#].*)?$/);",
+"      if (m) return m[2] || '/';",
+"      var m2 = s.match(/^(?:https?:\\/\\/[^\\/]+)?\\/__t\\/([A-Za-z0-9_-]+)/);",
+"      if (m2) {",
+"        var d = decTok(m2[1]);",
+"        if (d && /^https?/i.test(d)) {",
+"          try {",
+"            var du = new URL(d);",
+"            if (DOC) { var dh = new URL(DOC).host; if (du.host === dh) return du.pathname + du.search; }",
+"            return null; /* cross-host script (turnstile & friends): key is the raw attr */",
+"          } catch (eU2) { return null; }",
+"        }",
+"      }",
+"      if (s.charAt(0) === '/' && s.charAt(1) !== '/') return s;",
+"      var m3 = s.match(/^https?:\\/\\/([^\\/?#]+)([\\/?#].*)?$/i);",
+"      if (m3 && DOC) {",
+"        try { if (new URL(DOC).host === m3[1].toLowerCase()) return m3[2] || '/'; } catch (eU3) { }",
+"      }",
+"      return null;",
+"    } catch (e) { return null; }",
+"  }",
+"  try {",
+"    if (typeof globalThis.TURBOPACK === 'undefined') {",
+"      var __tpArr = [];",
+"      var __tpRealPush = null;",
+"      var __tpNormalize = function (entry) {",
+"        try {",
+"          if (!entry || typeof entry !== 'object' || !entry.length) return;",
+"          var e0 = entry[0];",
+"          if (e0 && typeof e0 === 'object' && e0.nodeType === 1 &&",
+"              String(e0.tagName || '').toUpperCase() === 'SCRIPT') {",
+"            var raw = '';",
+"            try { raw = String(e0.getAttribute('src') || ''); } catch (eGA) { raw = ''; }",
+"            var __p = tpRecoverPath(raw);",
+"            if (__p) entry[0] = { src: __p, getAttribute: function (n) {",
+"              if (n === 'src') return __p;",
+"              try { return e0.getAttribute(n); } catch (eX) { return null; }",
+"            } };",
+"          }",
+"        } catch (eN) { /* never break a registration */ }",
+"      };",
+"      var __tpPush = function (v) {",
+"        __tpNormalize(v);",
+"        if (__tpRealPush) { try { return __tpRealPush(v); } catch (eRP) { /* fall through */ } }",
+"        return Array.prototype.push.call(__tpArr, v);",
+"      };",
+"      try { Object.defineProperty(__tpArr, 'push', { value: __tpPush, writable: true, configurable: true }); } catch (ePD) { }",
+"      Object.defineProperty(globalThis, 'TURBOPACK', {",
+"        get: function () { return __tpArr; },",
+"        set: function (v) { __tpRealPush = (v && typeof v.push === 'function') ? v.push : null; },",
+"        configurable: true",
+"      });",
+"    }",
+"  } catch (eTP) { /* inert for non-Turbopack pages */ }",
+"",
 "  /* ---------- proxy-path bookkeeping ----------",
 "   * Guards against double-prefixing and recognises URLs that already",
 "   * point at the worker (same-origin) instead of the upstream host.",
@@ -545,6 +651,11 @@ const PATCH_JS = [
 "      }",
 "      if (typeof u !== 'string') return u;",
 "      var str = u.trim();",
+"      if (!str) return str;",
+"      /* v6.8: app code occasionally assigns JSON-quoted URLs",
+"       * (src = \"https://cdn...\") — strip wrapping quotes or the",
+"       * mapped path 404s with %22 noise. */",
+"      str = str.replace(/^[\"']+|[\"']+$/g, '');",
 "      if (!str) return str;",
 "      if (/^(data|blob|about|javascript|mailto|tel|sms|intent|ms-|chrome|file|ws|wss):/i.test(str)) {",
 "        // wss/ws handled by the WebSocket wrapper below; here pass through",
@@ -2472,7 +2583,7 @@ async function handle(req, event) {
     if (ownerKeyOf(event) && !(await ownerKeyOk(req, event))) {
       const lockP = url.pathname;
       if (lockP === '/__status') {
-        return json({ ok: true, name: VERSION, time: new Date().toISOString(), session: true, session_mode: 'keyed', locked: true }, req);
+        return json({ ok: true, name: VERSION, build: BUILD, time: new Date().toISOString(), session: true, session_mode: 'keyed', locked: true }, req);
       }
       let tokOk = false;
       if (lockP.startsWith('/__t/')) {
@@ -2514,7 +2625,7 @@ async function handle(req, event) {
        * account that signs in (zero setup — the pocket handles the
        * rest). Absent session fields entirely = a pre-7.1 open relay. */
       const masterKey = ownerKeyOf(event);
-      return json({ ok: true, name: VERSION, time: new Date().toISOString(), token_required: !!token, token_ok: tokenOk, session: true, session_mode: masterKey ? 'keyed' : 'auto', entry: entry }, req);
+      return json({ ok: true, name: VERSION, build: BUILD, time: new Date().toISOString(), token_required: !!token, token_ok: tokenOk, session: true, session_mode: masterKey ? 'keyed' : 'auto', entry: entry }, req);
     }
 
     /* ---- neutral favicon: never a proxied page ---- */
@@ -2635,18 +2746,61 @@ async function handle(req, event) {
       }
       host = ou.host;
       pfx = '';
-      upstream = origin + upath + url.search;
-      tokMode = true;
+      /* v6.8: quoted-URL healing — app code occasionally assigns
+       * JSON-quoted URLs (src = "\"/brand/x.webp\"" or
+       * "\"https://cdn/x.jpg\""). The browser resolves those against
+       * the <base> into /__o/<otok>/%22… paths that would 404. Strip
+       * the wrapping quotes; if what remains is an embedded absolute
+       * URL (its '//' collapsed to '/' during resolution), proxy that
+       * allowlisted URL directly. */
+      let upathF = upath;
+      if (/^\/(?:%22|")/.test(upath)) {
+        const stripped = upath.replace(/^\/(?:%22|")+/, '').replace(/(?:%22|")+$/, '');
+        const mAbs = stripped.match(/^(https?):\/+([^\/]+)(\/.*)?$/i);
+        if (mAbs) {
+          const absHost = mAbs[2].toLowerCase();
+          if (hostAllowed(absHost, event)) {
+            host = absHost;
+            upstream = mAbs[1].toLowerCase() + '://' + absHost + (mAbs[3] || '/') + url.search;
+            tokMode = true;
+            pfx = '';
+          } else {
+            return json({ error: 'host not allowed' }, req, 403);
+          }
+        } else if (stripped && stripped.charAt(0) === '/') {
+          upstream = origin + stripped + url.search;
+          tokMode = true;
+        } else {
+          upstream = origin + upath + url.search;
+          tokMode = true;
+        }
+      } else {
+        upstream = origin + upathF + url.search;
+        tokMode = true;
+      }
     } else if (url.pathname.startsWith('/p/')) {
       const rest = url.pathname.slice(3); // "<host>/path..."
       const slash = rest.indexOf('/');
       host = slash < 0 ? rest : rest.slice(0, slash);
       const path = slash < 0 ? '/' : rest.slice(slash);
-      if (!hostAllowed(host)) {
+      if (!hostAllowed(host, event)) {
         return json({ error: 'host not allowed', host: host, allowed_suffixes: allowList(event) }, req, 403);
       }
       pfx = '/p/' + host;
       upstream = 'https://' + host + path + url.search;
+    } else if (url.pathname.startsWith('/cdn-cgi/')) {
+      /* v1.1: a proxied challenge page scripts its platform resources
+       * ROOT-RELATIVE (/cdn-cgi/challenge-platform/..., /cdn-cgi/speculation),
+       * so they resolve onto the relay origin instead of inside
+       * /__o/<otok>/. Route them to the app upstream — the only document
+       * host, hence the only zone that can run a browser challenge
+       * dance here — so the platform's own fetches stop dying on the
+       * neutral 404. Cookies ride the normal per-host scoping path. */
+      const appH = chatHost(event);
+      host = appH;
+      pfx = '';
+      upstream = 'https://' + appH + url.pathname + url.search;
+      tokMode = true;
     } else {
       /* v5: bare paths no longer mirror chat.z.ai — the transparent
        * catch-all is GONE. Nothing navigates to this worker; the only
@@ -2710,9 +2864,18 @@ async function handle(req, event) {
         h.set('accept-encoding', 'identity');
       }
     } catch (eAE) { /* keep */ }
-    h.set('cookie', mergeCookies(req.headers.get('cookie') || '', req.headers.get('x-cookie') || ''));
-    h.set('origin', 'https://' + host);
-    h.set('referer', 'https://' + host + '/');
+    /* v6.8: only forward cookies when something survives the merge —
+     * an empty "cookie:" header is a bot tell nobody needs. */
+    const ckFwd = mergeCookies(req.headers.get('cookie') || '', req.headers.get('x-cookie') || '', host);
+    if (ckFwd) h.set('cookie', ckFwd);
+    /* v6.8: for the API host the real app calls CROSS-ORIGIN from the
+     * app host — replay that exact CORS shape (origin/referer of the
+     * app, not of the api target) so zone rules keyed on the app
+     * origin see a faithful browser request. */
+    const isApiTarget = host === apiHost(event) && host !== chatHost(event);
+    const orgHost = isApiTarget ? appOriginForApi(event) : host;
+    h.set('origin', 'https://' + orgHost);
+    h.set('referer', 'https://' + orgHost + '/');
 
     let body = undefined;
     let needDuplex = false;
@@ -3048,7 +3211,7 @@ async function handle(req, event) {
     if (loc && res.status >= 300 && res.status < 400 && res.status !== 304) {
       const mapped = mapLocation(loc, upUrl, event, tokMode);
       const rh = scrubHeaders(res.headers);
-      reissueCookies(res, rh, event);
+      reissueCookies(res, rh, event, host);
       reissueRawCookies(recoveryCookies, rh); /* v6.4 recovery cookies ride along */
       rh.set('location', mapped);
       maybeSetTokenCookie(req, rh, event);
@@ -3058,7 +3221,7 @@ async function handle(req, event) {
     /* ---- normal responses ---- */
     const ct = (res.headers.get('content-type') || '').toLowerCase();
     const outHeaders = scrubHeaders(res.headers);
-    reissueCookies(res, outHeaders, event);
+    reissueCookies(res, outHeaders, event, host);
     reissueRawCookies(recoveryCookies, outHeaders); /* v6.4 recovery cookies ride along */
     maybeSetTokenCookie(req, outHeaders, event);
     outHeaders.set('x-final-url', res.url || upUrl.toString());
@@ -3071,8 +3234,12 @@ async function handle(req, event) {
 
     if (ct.includes('text/html')) {
       const text = await res.text();
+      /* v6.8: browser navigation => worker-served doc (sd false) */
+      const secDest = (req.headers.get('sec-fetch-dest') || '').toLowerCase();
+      const secMode = (req.headers.get('sec-fetch-mode') || '').toLowerCase();
+      const browserNav = secDest === 'document' && secMode === 'navigate';
       const html = rewriteHtml(text, pfx, host, new URL(req.url).origin, token, allowList(event),
-        tokMode ? upUrl.toString() : null);
+        tokMode ? upUrl.toString() : null, tokMode ? !browserNav : false);
       const htmlRes = new Response(html, { status: res.status, headers: outCt });
       /* ---- v6.7: boot cookie-seed ---------------------------------------
        * When the pocket's document fetch arrived with REAL browser
@@ -3199,13 +3366,35 @@ function maybeSetTokenCookie(req, h, event) {
   h.append('set-cookie', tokenCookie(token));
 }
 
-function mergeCookies(a, b) {
+function hostTag(host) {
+  /* v1.1: stable 8-hex tag for one upstream host. Scoped CF cookie
+   * names carry it so a clearance minted for zone A never rides a
+   * request to zone B. */
+  let h = 0x811c9dc5;
+  const s = String(host || '').toLowerCase();
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24)) >>> 0; }
+  return ('0000000' + h.toString(16)).slice(-8);
+}
+const CF_COOKIE_RE = /^(cf_clearance|__cf_bm|__cfuid|cf_chl_[a-z0-9_]+|cf_use_obsolete)$/i;
+const CF_SCOPE_RE = /^__op_cc_([0-9a-f]{8})_(cf_clearance|__cf_bm|__cfuid|cf_chl_[a-z0-9_]+|cf_use_obsolete)$/i;
+
+function mergeCookies(a, b, host) {
   const seen = new Map();
   /* this worker's OWN cookies never belong upstream — __op_t is
    * the token cookie and zp_dev a 6.8-era device-vault leftover
    * some phones may still hold; both live on the relay origin
-   * only and must not ride to z.ai. */
+   * only and must not ride to z.ai.
+   * v6.8: Cloudflare cookies (cf_clearance, __cf_bm, __cfuid, …)
+   * are dropped too. They are HOST-BOUND: a clearance minted for
+   * music.octavestreaming.com on the VIEWER's browser does not
+   * validate when this worker presents it to api.octavestreaming.com
+   * — an invalid clearance raises the bot score and tips the
+   * zone's managed challenge (the api search/account endpoints
+   * guard hard), poisoning every relayed request after the first
+   * challenge dance. Octave's auth model is cookie-free (Bearer
+   * account keys), so nothing legitimate is lost. */
   const own = new Set(['zp_dev', '__op_t']);
+  const wantTag = host != null ? hostTag(host) : null;
   const add = (str) => {
     if (!str) return;
     str.split(';').forEach((kv) => {
@@ -3213,6 +3402,15 @@ function mergeCookies(a, b) {
       if (!kv) return;
       const name = kv.split('=')[0];
       if (own.has(name)) return;
+      if (/^(cf_|__cf)/i.test(name)) return;
+      /* v1.1: scoped CF cookies (see reissueCookies) restore ONLY on
+       * requests bound for the host that minted them; scoped cookies
+       * for other hosts are skipped entirely. */
+      const sc = name.match(CF_SCOPE_RE);
+      if (sc) {
+        if (wantTag !== null && sc[1] === wantTag && !seen.has(sc[2])) seen.set(sc[2], sc[2] + kv.slice(name.length));
+        return;
+      }
       if (!seen.has(name)) seen.set(name, kv);
     });
   };
@@ -3255,7 +3453,7 @@ function scrubHeaders(headers) {
 }
 
 /* re-issue upstream cookies for this worker's domain (CHIPS-partitioned so they work in the app iframe) */
-function reissueCookies(res, h, event) {
+function reissueCookies(res, h, event, host) {
   try {
     let raw = [];
     if (typeof res.headers.getSetCookie === 'function') raw = res.headers.getSetCookie();
@@ -3266,8 +3464,23 @@ function reissueCookies(res, h, event) {
     if (!raw.length) return;
     raw.forEach((sc) => {
       const parts = String(sc).split(';');
-      const nv = parts[0].trim();
+      let nv = parts[0].trim();
       if (!nv) return;
+      /* v1.1: CF cookies are HOST-BOUND. Re-issue them under a
+       * host-scoped name so the browser keeps one clearance per
+       * upstream zone; mergeCookies restores the original name only
+       * when the request rides to that zone. A challenge the relay's
+       * egress trips can then be solved THROUGH the relay instead of
+       * looping forever. x-set-cookie still exposes the RAW names for
+       * the sandbox jar (bare cf_* stays dropped there — no zone
+       * poisoning either way). */
+      try {
+        const eq = nv.indexOf('=');
+        const nm = eq < 0 ? nv : nv.slice(0, eq);
+        if (host && CF_COOKIE_RE.test(nm)) {
+          nv = '__op_cc_' + hostTag(host) + '_' + nm + (eq < 0 ? '' : nv.slice(eq));
+        }
+      } catch (eNV) { /* keep raw */ }
       let expires = null, maxAge = null, httpOnly = false;
       for (let i = 1; i < parts.length; i++) {
         const p = parts[i].trim();
@@ -3349,7 +3562,9 @@ function corsHeaders(req, h) {
   h.set('access-control-allow-methods', 'GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS');
   const reqH = req.headers.get('access-control-request-headers');
   h.set('access-control-allow-headers', reqH || '*');
-  h.set('access-control-expose-headers', 'content-disposition, content-type, x-set-cookie, x-final-url, filename, x-zp-retry, x-zp-jsrw, x-jar-seed, x-zp-claim, x-zp-cache');
+  h.set('access-control-expose-headers', 'content-disposition, content-type, x-set-cookie, x-final-url, filename, x-zp-retry, x-zp-jsrw, x-jar-seed, x-zp-claim, x-zp-cache, x-op-version, x-op-build');
+  h.set('x-op-version', VERSION);
+  h.set('x-op-build', BUILD);
   h.set('access-control-max-age', '86400');
   return h;
 }
@@ -3368,7 +3583,7 @@ function minimalHeaders(req, host) {
   if (al) h.set('accept-language', al);
   h.set('accept', req.headers.get('accept') || '*/*');
   h.set('accept-encoding', 'gzip, deflate, br');
-  const ck = mergeCookies(req.headers.get('cookie') || '', req.headers.get('x-cookie') || '');
+  const ck = mergeCookies(req.headers.get('cookie') || '', req.headers.get('x-cookie') || '', host);
   if (ck) h.set('cookie', ck);
   h.set('origin', 'https://' + host);
   h.set('referer', 'https://' + host + '/');
@@ -3497,7 +3712,7 @@ async function diagPage(req, event) {
     '.foot{color:var(--sub);font-size:11.5px;line-height:1.6}' +
     '</style></head><body>' +
     '<h1>relay \u2014 worker diagnostics</h1>' +
-    '<div class="tag">' + esc(VERSION) + ' \u00b7 ' + esc(new Date().toISOString()) + '</div>' +
+    '<div class="tag">' + esc(VERSION + ' \u00b7 build ' + BUILD) + ' \u00b7 ' + esc(new Date().toISOString()) + '</div>' +
     '<div class="verdict">' + esc(verdict) + '</div>' +
     probeRow('Probe 1 \u00b7 as the app', 'the site the pocket boots, browser-like', app) +
     probeRow('Probe 2 \u00b7 minimal', 'accept + user-agent + origin only', mini) +
@@ -3555,7 +3770,11 @@ function prefixForHost(host, event) {
  *         subresource (script, css, img) would silently fail. */
 function mapAttr(v, pfx, host, allow, tokDoc, workerOrigin) {
   try {
-    const s = String(v || '').trim();
+    let s = String(v || '').trim();
+    if (!s) return v;
+    /* v6.8: app code occasionally emits JSON-quoted URLs
+     * (src="/"https://cdn…/"") — strip wrapping quotes before mapping */
+    s = s.replace(/^["']+|["']+$/g, '');
     if (!s) return v;
     if (/^(data|blob|about|javascript|mailto|tel|sms|intent|ms-|chrome|file|#)/i.test(s)) return v;
     if (tokDoc) {
@@ -3601,7 +3820,7 @@ function mapAttr(v, pfx, host, allow, tokDoc, workerOrigin) {
 
 const ATTR_NAMES = 'href|src|action|formaction|poster|data-src|data-href|data-url|data-background';
 
-function rewriteHtml(text, pfx, host, workerOrigin, token, allow, tokDoc) {
+function rewriteHtml(text, pfx, host, workerOrigin, token, allow, tokDoc, sandbox) {
   try {
     /* strip CSP meta tags and base targets */
     text = text.replace(/<meta[^>]+http-equiv\s*=\s*["']?content-security-policy["']?[^>]*>/gi, '');
@@ -3653,8 +3872,15 @@ function rewriteHtml(text, pfx, host, workerOrigin, token, allow, tokDoc) {
      * actions) would all die. With <base> they resolve onto the worker,
      * path-preserved. The runtime's document.baseURI override still
      * reports the upstream URL to the app, so routers hydrate right. */
+    /* v6.8: sd (sandbox) is now decided by HOW the document was fetched:
+     * the pocket shell paints docs via CORS fetch (Sec-Fetch-Dest: empty),
+     * a real browser navigates them (Sec-Fetch-Dest: document + Mode:
+     * navigate). Token docs fetched by navigation are worker-served:
+     * link clicks and location writes must navigate FOR REAL instead of
+     * postMessaging a shell that is not there. Headers absent (old
+     * browsers / plain curl): keep the v5 assumption (sandbox). */
     const cfg = { pfx: pfx, host: host, worker: workerOrigin, token: token || '', allow: allow,
-      key: TOK_KEY, tok: !!tokDoc, doc: tokDoc || '', sd: !!tokDoc };
+      key: TOK_KEY, tok: !!tokDoc, doc: tokDoc || '', sd: !!sandbox };
     let inject = '<scr' + 'ipt>window.__ZAI__=' + JSON.stringify(cfg) + ';' + PATCH_JS + '</scr' + 'ipt>';
     if (tokDoc) {
       try {
@@ -3758,6 +3984,7 @@ function servicePage(req) {
     '<body><div class="c"><div class="d"><svg viewBox="0 0 64 64"><path d="M18 34l10 10 20-24" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' +
     '<h1>Service online</h1>' +
     '<p>Relay endpoint &middot; status at <code>/__status</code></p>' +
+    '<p>' + VERSION + ' &middot; build ' + BUILD + '</p>' +
     '</div></body></html>';
   return new Response(html, { status: 200, headers: corsHeaders(req, new Headers({ 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' })) });
 }
@@ -3800,7 +4027,7 @@ async function proxyWebsocket(req, url, event) {
     if (t.searchParams.has('__t')) t.searchParams.delete('__t');
 
     const upHeaders = new Headers({ 'Upgrade': 'websocket' });
-    const ck = mergeCookies(req.headers.get('cookie') || '', req.headers.get('x-cookie') || '');
+    const ck = mergeCookies(req.headers.get('cookie') || '', req.headers.get('x-cookie') || '', t.host);
     if (ck) upHeaders.set('cookie', ck);
     upHeaders.set('origin', 'https://' + t.host);
 
