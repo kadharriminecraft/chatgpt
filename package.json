@@ -1,0 +1,13 @@
+{
+  "name": "superwork",
+  "version": "4.0.0",
+  "private": true,
+  "description": "Superwork 4.0 — pure API proxy for Cloudflare Workers + standalone single-file browser client",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
