@@ -1,0 +1,3580 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#202124" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<title>Superwork</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20128%20128%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230fa895%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230b8f7e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%22116%22%20height%3D%22116%22%20rx%3D%2228%22%20fill%3D%22url(%23g)%22%2F%3E%3Cpath%20d%3D%22M84.5%2045.8c-3.2-6.4-10.9-11-20.5-11-13%200-23%207.9-23%2019.2%200%2010.6%208.4%2016.3%2020.9%2019.5%2010.6%202.7%2014.2%205.2%2014.2%2010%200%205.4-5%208.9-12.6%208.9-8.2%200-14.9-3.6-18.3-10.4L32%2089.6c4.4%208.7%2013.6%2014.6%2026.2%2014.6h2.6c14.5%200%2025.3-7.8%2025.3-20.6%200-11.4-8.1-17-21.9-20.7-11.6-3.1-13.9-5.6-13.9-9.6%200-4.4%204.4-7.4%2011.3-7.4%206.6%200%2011.8%202.9%2014.7%208.3z%22%20fill%3D%22%23ffffff%22%2F%3E%3C%2Fsvg%3E">
+<style>
+/* ============================================================
+   Superwork 4.0 — Chrome-style UI
+   Light + dark themes · tab strip + omnibox only at the top ·
+   nothing at the bottom.
+   ============================================================ */
+:root {
+  --tab-h: 40px;
+  --tool-h: 48px;
+  --tab-bg: #dee1e6;
+  --tab-fg: #3c4043;
+  --tab-active-bg: #ffffff;
+  --tab-active-fg: #202124;
+  --tab-hover: rgba(255,255,255,.35);
+  --chrome-bg: #ffffff;
+  --chrome-fg: #202124;
+  --omni-bg: #f1f3f4;
+  --omni-bg-focus: #ffffff;
+  --omni-fg: #202124;
+  --omni-sub: #5f6368;
+  --btn-fg: #5f6368;
+  --btn-hover: rgba(0,0,0,.06);
+  --border: #dadce0;
+  --page-bg: #ffffff;
+  --page-fg: #202124;
+  --menu-bg: #ffffff;
+  --menu-fg: #202124;
+  --menu-hover: #f1f3f4;
+  --accent: #0b8f7e;
+  --accent-fg: #ffffff;
+  --danger: #d93025;
+  --shadow: 0 1px 3px rgba(60,64,67,.3), 0 4px 8px 3px rgba(60,64,67,.15);
+  --card: #ffffff;
+  --field: #f1f3f4;
+  --link: #1a73e8;
+  --scroll: #c1c1c1;
+}
+[data-theme="dark"] {
+  --tab-bg: #35363a;
+  --tab-fg: #e8eaed;
+  --tab-active-bg: #292a2d;
+  --tab-active-fg: #e8eaed;
+  --tab-hover: rgba(255,255,255,.08);
+  --chrome-bg: #292a2d;
+  --chrome-fg: #e8eaed;
+  --omni-bg: #202124;
+  --omni-bg-focus: #202124;
+  --omni-fg: #e8eaed;
+  --omni-sub: #9aa0a6;
+  --btn-fg: #e8eaed;
+  --btn-hover: rgba(255,255,255,.1);
+  --border: #5f6368;
+  --page-bg: #202124;
+  --page-fg: #e8eaed;
+  --menu-bg: #292a2d;
+  --menu-fg: #e8eaed;
+  --menu-hover: #35363a;
+  --shadow: 0 1px 3px rgba(0,0,0,.5), 0 4px 8px 3px rgba(0,0,0,.3);
+  --card: #292a2d;
+  --field: #35363a;
+  --link: #8ab4f8;
+  --scroll: #5f6368;
+}
+@media (prefers-color-scheme: dark) {
+  [data-theme="system"] {
+    --tab-bg: #35363a; --tab-fg: #e8eaed; --tab-active-bg: #292a2d; --tab-active-fg: #e8eaed;
+    --tab-hover: rgba(255,255,255,.08); --chrome-bg: #292a2d; --chrome-fg: #e8eaed;
+    --omni-bg: #202124; --omni-bg-focus: #202124; --omni-fg: #e8eaed; --omni-sub: #9aa0a6;
+    --btn-fg: #e8eaed; --btn-hover: rgba(255,255,255,.1); --border: #5f6368;
+    --page-bg: #202124; --page-fg: #e8eaed; --menu-bg: #292a2d; --menu-fg: #e8eaed;
+    --menu-hover: #35363a; --shadow: 0 1px 3px rgba(0,0,0,.5), 0 4px 8px 3px rgba(0,0,0,.3);
+    --card: #292a2d; --field: #35363a; --link: #8ab4f8; --scroll: #5f6368;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+  font-size: 14px; overflow: hidden; background: var(--page-bg); color: var(--page-fg);
+  overscroll-behavior: none;
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+svg { display: block; fill: currentColor; pointer-events: none; }
+[hidden] { display: none !important; }
+
+#app { height: 100dvh; display: flex; flex-direction: column; }
+
+/* ============ Header: tab strip + toolbar ============ */
+#browser { flex: 0 0 auto; position: relative; z-index: 40; }
+#tabstrip {
+  height: var(--tab-h); background: var(--tab-bg);
+  display: flex; align-items: flex-end; padding: 6px 6px 0 8px; gap: 4px;
+  padding-left: max(8px, env(safe-area-inset-left));
+}
+/* mobile-Chrome mode: no strip, a tabs button in the toolbar instead */
+#app[data-tabui="button"] #tabstrip { display: none; }
+#app[data-tabui="button"] #menu { top: calc(var(--tool-h) - 4px); }
+#app[data-tabui="button"] #findbar { top: var(--tool-h); }
+#btn-tabs { position: relative; }
+#tabs-badge {
+  position: absolute; top: 2px; right: 2px; min-width: 17px; height: 17px;
+  border-radius: 9px; background: var(--accent); color: #fff;
+  font-size: 10.5px; font-weight: 600; display: grid; place-items: center;
+  padding: 0 4px; line-height: 1; pointer-events: none;
+}
+#tabs {
+  display: flex; align-items: flex-end; gap: 2px; flex: 1; min-width: 0;
+  overflow-x: auto; overflow-y: hidden; scrollbar-width: none;
+}
+#tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 1 0 60px; max-width: 240px; min-width: 56px; height: 34px;
+  display: flex; align-items: center; gap: 6px; padding: 0 6px 0 10px;
+  background: transparent; color: var(--tab-fg); border-radius: 8px 8px 0 0;
+  cursor: default; user-select: none; position: relative; transition: background .12s;
+}
+.tab:hover { background: var(--tab-hover); }
+.tab.active { background: var(--tab-active-bg); color: var(--tab-active-fg); }
+.tab .t-ico { width: 16px; height: 16px; flex: 0 0 auto; border-radius: 2px; }
+.tab .t-ico img { width: 16px; height: 16px; display: block; }
+.tab .t-title {
+  flex: 1; min-width: 0; font-size: 12px; white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis; text-align: left; line-height: 34px;
+}
+.tab .t-close {
+  width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center;
+  flex: 0 0 auto; opacity: .75;
+}
+.tab .t-close:hover { background: rgba(0,0,0,.12); opacity: 1; }
+[data-theme="dark"] .tab .t-close:hover { background: rgba(255,255,255,.15); }
+.tab .t-close svg { width: 12px; height: 12px; }
+.strip-btn {
+  width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  color: var(--tab-fg); margin-bottom: 3px; flex: 0 0 auto;
+}
+.strip-btn:hover { background: var(--tab-hover); }
+.strip-btn svg { width: 16px; height: 16px; }
+
+#toolbar {
+  height: var(--tool-h); background: var(--chrome-bg); color: var(--chrome-fg);
+  display: flex; align-items: center; gap: 2px; padding: 0 4px;
+  padding-left: max(4px, env(safe-area-inset-left));
+  padding-right: max(4px, env(safe-area-inset-right));
+}
+.tb-btn {
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  color: var(--btn-fg); flex: 0 0 auto;
+}
+.tb-btn:hover:not(:disabled) { background: var(--btn-hover); }
+.tb-btn:disabled { opacity: .3; pointer-events: none; }
+.tb-btn svg { width: 20px; height: 20px; }
+
+/* ============ Omnibox ============ */
+#omnibox {
+  flex: 1; min-width: 0; height: 38px; position: relative;
+  background: var(--omni-bg); border-radius: 20px;
+  display: flex; align-items: center; gap: 6px; padding: 0 4px 0 12px;
+  transition: background .15s, box-shadow .15s;
+}
+#omnibox.focused { background: var(--omni-bg-focus); box-shadow: 0 1px 6px rgba(32,33,36,.28); }
+#omni-left { display: flex; align-items: center; flex: 0 0 auto; color: var(--omni-sub); }
+#omni-lock, #omni-search { width: 16px; height: 16px; display: none; }
+#omnibox.secure #omni-lock { display: block; }
+#omnibox.search #omni-search { display: block; }
+#omnibox-input {
+  flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: transparent;
+  font-size: 15px; color: var(--omni-fg); font-family: inherit;
+}
+#omnibox-input::placeholder { color: var(--omni-sub); }
+#omni-clear, #omni-star {
+  width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  color: var(--omni-sub); flex: 0 0 auto;
+}
+#omni-clear svg, #omni-star svg { width: 16px; height: 16px; }
+#omni-clear:hover, #omni-star:hover { background: var(--btn-hover); }
+#omni-star.starred { color: #f9ab00; }
+
+/* Suggestions dropdown */
+#suggest {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 60;
+  background: var(--menu-bg); color: var(--menu-fg); border-radius: 8px;
+  box-shadow: var(--shadow); overflow: hidden; padding: 4px 0; max-height: 380px; overflow-y: auto;
+}
+.sg {
+  display: flex; align-items: center; gap: 12px; padding: 8px 16px; cursor: default;
+  white-space: nowrap; overflow: hidden; text-align: left; width: 100%;
+}
+.sg:hover, .sg.sel { background: var(--menu-hover); }
+.sg .sg-ico { width: 16px; height: 16px; flex: 0 0 auto; display: grid; place-items: center; color: var(--omni-sub); }
+.sg .sg-ico svg, .sg .sg-ico img { width: 16px; height: 16px; }
+.sg .sg-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 14px; }
+.sg .sg-text b { font-weight: 600; }
+.sg .sg-kind { flex: 0 0 auto; font-size: 12px; color: var(--omni-sub); max-width: 40%; overflow: hidden; text-overflow: ellipsis; }
+
+/* progress bar */
+#progressbar { height: 2px; background: transparent; }
+#progressbar i {
+  display: block; height: 100%; width: 0; background: var(--accent);
+  transition: width .25s ease, opacity .4s ease; opacity: 0;
+}
+#progressbar.loading i { opacity: 1; }
+#progressbar.done i { opacity: 0; }
+
+/* ============ Viewport ============ */
+#viewport {
+  flex: 1 1 auto; position: relative; background: var(--page-bg);
+  min-height: 0; overflow: hidden;
+}
+.tab-view { position: absolute; inset: 0; display: none; }
+.tab-view.active { display: block; }
+.tab-view iframe { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
+.tab-view .internal {
+  position: absolute; inset: 0; overflow-y: auto; background: var(--page-bg); color: var(--page-fg);
+  -webkit-overflow-scrolling: touch;
+}
+.tab-view .internal::-webkit-scrollbar { width: 10px; }
+.tab-view .internal::-webkit-scrollbar-thumb { background: var(--scroll); border-radius: 5px; }
+
+/* ============ Menu ============ */
+#menu {
+  position: absolute; top: calc(var(--tab-h) + var(--tool-h) - 4px); right: 8px; z-index: 80;
+  background: var(--menu-bg); color: var(--menu-fg); border-radius: 10px;
+  box-shadow: var(--shadow); padding: 6px 0; min-width: 240px; max-height: calc(100dvh - 140px);
+  overflow-y: auto; animation: pop .12s ease;
+}
+@keyframes pop { from { opacity: 0; transform: translateY(-6px) scale(.98); } to { opacity: 1; } }
+.mi {
+  display: flex; align-items: center; gap: 14px; width: 100%; padding: 10px 18px;
+  font-size: 14px; text-align: left; color: inherit;
+}
+.mi:hover { background: var(--menu-hover); }
+.mi svg { width: 18px; height: 18px; opacity: .8; }
+.mi .mi-check { margin-left: auto; opacity: 0; color: var(--accent); }
+.mi.on .mi-check { opacity: 1; }
+.msep { height: 1px; background: var(--border); margin: 6px 0; opacity: .6; }
+.mhead { padding: 8px 18px 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--omni-sub); }
+
+/* v7: zoom row in the 3-dots menu */
+.mzoom {
+  display: flex; align-items: center; gap: 8px; padding: 6px 18px;
+  border-bottom: 1px solid var(--border); border-top: 1px solid var(--border);
+  margin: 4px 0;
+}
+.mzoom-lab { font-size: 14px; color: inherit; }
+.mzoom-ctl { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+.mzoom-btn {
+  width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 19px; line-height: 1; color: inherit;
+}
+.mzoom-btn:hover { background: var(--menu-hover); }
+.mzoom-val { min-width: 48px; text-align: center; font-size: 13px; color: var(--omni-sub); }
+.mzoom-reset { color: var(--accent); font-size: 12.5px; padding: 7px 10px; border-radius: 14px; }
+.mzoom-reset:hover { background: var(--menu-hover); }
+
+/* ============ Find bar ============ */
+#findbar {
+  position: absolute; top: calc(var(--tab-h) + var(--tool-h)); right: 12px; z-index: 70;
+  display: flex; align-items: center; gap: 4px; padding: 6px 8px;
+  background: var(--menu-bg); border: 1px solid var(--border); border-top: 0;
+  border-radius: 0 0 10px 10px; box-shadow: var(--shadow);
+  animation: pop .12s ease; max-width: calc(100vw - 24px);
+}
+#find-input {
+  height: 32px; width: 200px; max-width: 44vw; border: 0; outline: 0; background: transparent;
+  color: var(--menu-fg); font-size: 14px;
+}
+#find-count { font-size: 12px; color: var(--omni-sub); min-width: 44px; text-align: center; }
+#findbar button { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: var(--omni-sub); }
+#findbar button:hover { background: var(--menu-hover); }
+#findbar button svg { width: 18px; height: 18px; }
+mark.swf { background: #fff3a3; color: #202124; border-radius: 2px; }
+mark.swf.cur { background: #ff9632; color: #202124; }
+
+/* ============ Tab grid overlay (v6: simple 2-column grid) ============ */
+#tabgrid {
+  position: absolute; inset: 0; z-index: 90; background: var(--page-bg);
+  display: flex; flex-direction: column; animation: fadein .15s ease;
+}
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+.tg-head {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+  padding-top: max(12px, env(safe-area-inset-top));
+}
+#tg-count { font-size: 17px; font-weight: 500; color: var(--page-fg); }
+.tg-spacer { flex: 1; }
+.tg-btn {
+  padding: 9px 16px; border-radius: 18px; font-size: 13px; color: var(--accent);
+  border: 1px solid var(--border);
+}
+.tg-btn:hover { background: var(--menu-hover); }
+/* larger + button, top right */
+.tg-new {
+  width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--accent); color: #fff; flex: 0 0 auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,.22);
+}
+.tg-new:active { transform: scale(.94); }
+.tg-new svg { width: 26px; height: 26px; }
+#tg-list {
+  flex: 1; overflow-y: auto; display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px; padding: 6px 14px 24px; align-content: start;
+}
+.tg-card {
+  border-radius: 14px; overflow: hidden; background: var(--card);
+  box-shadow: 0 1px 4px rgba(0,0,0,.18); cursor: pointer; text-align: left;
+  display: flex; flex-direction: column; min-width: 0;
+}
+.tg-card.sel { outline: 3px solid var(--accent); outline-offset: -3px; }
+.tg-cell-head {
+  display: flex; align-items: center; gap: 8px; padding: 8px 6px 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.tg-cell-head img { width: 18px; height: 18px; flex: 0 0 auto; border-radius: 3px; }
+.tg-cell-title {
+  flex: 1; min-width: 0; font-size: 12.5px; white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis; color: var(--page-fg);
+}
+/* the X — top right of every cell, thumb-friendly */
+.tg-x {
+  width: 32px; height: 32px; border-radius: 50%; flex: 0 0 auto;
+  display: grid; place-items: center; color: var(--omni-sub);
+}
+.tg-x svg { width: 17px; height: 17px; }
+.tg-x:hover { background: var(--menu-hover); color: var(--danger, #d93025); }
+.tg-thumb {
+  height: 108px; background: var(--field); display: grid; place-items: center;
+  color: var(--omni-sub); position: relative;
+}
+.tg-thumb img { width: 36px; height: 36px; }
+.tg-thumb .tg-host {
+  position: absolute; bottom: 8px; left: 0; right: 0; text-align: center;
+  font-size: 11px; color: var(--omni-sub);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 8px;
+}
+
+/* ============ Downloads progress bar (v6) ============ */
+#dlbar {
+  position: fixed; left: 12px; bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 300; display: flex; flex-direction: column; gap: 8px;
+  width: min(320px, calc(100vw - 24px)); pointer-events: none;
+}
+.dl-card {
+  pointer-events: auto; display: flex; align-items: center; gap: 10px;
+  background: var(--card); border-radius: 12px; padding: 10px 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.28);
+  border: 1px solid var(--border);
+  animation: dl-in .18s ease;
+}
+@keyframes dl-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.dl-ico { width: 30px; height: 30px; border-radius: 8px; background: var(--field); display: grid; place-items: center; color: var(--accent); flex: 0 0 auto; }
+.dl-ico svg { width: 18px; height: 18px; }
+.dl-card.done .dl-ico { color: #1e8e3e; }
+.dl-mid { flex: 1; min-width: 0; }
+.dl-name { font-size: 12.5px; color: var(--page-fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dl-sub { font-size: 11px; color: var(--omni-sub); margin-top: 2px; }
+.dl-track { height: 3px; border-radius: 2px; background: var(--field); margin-top: 5px; overflow: hidden; }
+.dl-track i { display: block; height: 100%; width: 0%; background: var(--accent); border-radius: 2px; transition: width .15s; }
+.dl-x {
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  color: var(--omni-sub); flex: 0 0 auto;
+}
+.dl-x:hover { background: var(--menu-hover); }
+.dl-x svg { width: 15px; height: 15px; }
+/* downloads list in Settings */
+.dl-row-ico { width: 38px; height: 38px; border-radius: 10px; background: var(--field); display: grid; place-items: center; color: var(--accent); flex: 0 0 auto; }
+.dl-row-ico svg { width: 20px; height: 20px; }
+.dl-size { font-size: 11.5px; color: var(--omni-sub); margin-top: 2px; }
+.dl-act { display: flex; gap: 8px; flex: 0 0 auto; }
+
+/* ============ Dialog / toast ============ */
+dialog {
+  margin: auto; border: 0; border-radius: 14px; padding: 22px; min-width: 320px; max-width: 92vw;
+  background: var(--card); color: var(--page-fg); box-shadow: var(--shadow);
+}
+dialog::backdrop { background: rgba(0,0,0,.45); }
+#dlg h3 { font-size: 17px; font-weight: 500; margin-bottom: 16px; }
+#dlg-body { font-size: 14px; line-height: 1.5; min-height: 20px; }
+#dlg-body label { display: block; margin: 12px 0 6px; font-size: 12px; color: var(--omni-sub); text-transform: uppercase; letter-spacing: .04em; }
+#dlg-body input[type=text] {
+  width: 100%; height: 40px; border: 1px solid var(--border); border-radius: 8px;
+  padding: 0 12px; font-size: 14px; background: var(--field); color: var(--page-fg); outline: none;
+}
+#dlg-body input[type=text]:focus { border-color: var(--accent); }
+#dlg-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+.btn-primary {
+  background: var(--accent); color: var(--accent-fg); border-radius: 18px;
+  padding: 9px 20px; font-size: 13.5px; font-weight: 500;
+}
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-ghost { border-radius: 18px; padding: 9px 20px; font-size: 13.5px; color: var(--accent); }
+.btn-ghost:hover { background: var(--menu-hover); }
+
+#toast {
+  position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 200;
+  background: #323639; color: #e8eaed; padding: 12px 22px; border-radius: 8px;
+  font-size: 13.5px; box-shadow: var(--shadow); animation: fadein .18s ease; max-width: 86vw; text-align: center;
+}
+
+/* ============ v7: Save-As prompt (activation re-acquisition) ============ */
+.saveas {
+  position: fixed; inset: 0; z-index: 900; background: rgba(0,0,0,.45);
+  display: flex; align-items: center; justify-content: center;
+  animation: fadein .15s ease; padding: 24px;
+}
+.saveas-card {
+  width: min(400px, 92vw); background: var(--card); color: var(--page-fg);
+  border-radius: 18px; padding: 26px 24px; text-align: center;
+  box-shadow: 0 12px 48px rgba(0,0,0,.3);
+}
+.saveas-title { font-size: 17px; font-weight: 500; }
+.saveas-name {
+  font-size: 13px; color: var(--omni-sub); margin: 8px 0 2px;
+  word-break: break-all; max-height: 60px; overflow: hidden;
+}
+.saveas-sub { font-size: 12.5px; color: var(--omni-sub); margin-bottom: 18px; line-height: 1.5; }
+.saveas-btn { display: block; width: 100%; margin-top: 10px; padding: 12px; }
+
+/* ============================================================
+   Internal pages (new tab / settings / history / bookmarks)
+   ============================================================ */
+.nt-wrap { min-height: 100%; display: flex; flex-direction: column; align-items: center; padding: 9vh 20px 40px; }
+.nt-logo { width: 68px; height: 68px; margin-bottom: 28px; }
+.nt-search {
+  display: flex; align-items: center; gap: 10px; width: min(560px, 92vw);
+  height: 50px; border-radius: 25px; background: var(--field);
+  padding: 0 18px; border: 1px solid transparent; transition: box-shadow .15s, background .15s;
+}
+.nt-search:focus-within { background: var(--card); box-shadow: 0 1px 10px rgba(32,33,36,.22); }
+.nt-search svg { width: 20px; height: 20px; color: var(--omni-sub); flex: 0 0 auto; }
+.nt-search input { flex: 1; height: 100%; border: 0; outline: 0; background: transparent; font-size: 15.5px; color: var(--page-fg); }
+.nt-engine {
+  flex: 0 0 auto; font-size: 12px; color: var(--omni-sub); display: flex; align-items: center; gap: 4px;
+}
+.nt-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 6px; width: min(560px, 92vw); margin-top: 40px; }
+.ql {
+  display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 4px 10px;
+  border-radius: 10px; position: relative; color: var(--page-fg);
+}
+.ql:hover { background: var(--field); }
+.ql img { width: 32px; height: 32px; border-radius: 50%; background: var(--field); padding: 6px; }
+.ql span { font-size: 12px; max-width: 90px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ql .ql-x {
+  position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%;
+  display: none; place-items: center; color: var(--omni-sub); background: var(--card);
+}
+.ql:hover .ql-x { display: grid; }
+.ql-add { border: 1px dashed var(--border); color: var(--omni-sub); }
+.nt-note { margin-top: 48px; font-size: 12.5px; color: var(--omni-sub); text-align: center; max-width: 480px; line-height: 1.6; }
+.nt-note a { color: var(--link); }
+
+/* Settings & list pages */
+.set-wrap { max-width: 680px; margin: 0 auto; padding: 32px 22px 60px; }
+.set-h { font-size: 22px; font-weight: 400; margin-bottom: 26px; color: var(--page-fg); }
+.set-sec { margin-bottom: 30px; }
+.set-sec h4 {
+  font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--omni-sub); margin-bottom: 4px;
+}
+.set-desc { font-size: 12.5px; color: var(--omni-sub); margin-bottom: 14px; line-height: 1.5; }
+.set-row {
+  display: flex; align-items: center; gap: 14px; padding: 13px 4px;
+  border-bottom: 1px solid var(--border); min-height: 52px;
+}
+.set-row:last-child { border-bottom: 0; }
+.set-row .grow { flex: 1; min-width: 0; }
+.set-row .t { font-size: 14px; }
+.set-row .s { font-size: 12px; color: var(--omni-sub); margin-top: 2px; }
+.radio-row { display: flex; align-items: center; gap: 14px; padding: 12px 4px; border-bottom: 1px solid var(--border); width: 100%; text-align: left; }
+.radio-row input { width: 18px; height: 18px; accent-color: var(--accent); }
+.radio-row .t { font-size: 14px; }
+.radio-row .s { font-size: 12px; color: var(--omni-sub); margin-top: 1px; }
+select.set-select, input.set-input {
+  height: 38px; border: 1px solid var(--border); background: var(--field); color: var(--page-fg);
+  border-radius: 8px; padding: 0 12px; font-size: 13.5px; outline: none; min-width: 130px;
+}
+.switch { position: relative; width: 44px; height: 24px; flex: 0 0 auto; }
+.switch input { opacity: 0; width: 100%; height: 100%; position: absolute; cursor: pointer; z-index: 2; }
+.switch i {
+  position: absolute; inset: 0; background: var(--border); border-radius: 12px; transition: background .15s;
+}
+.switch i::after {
+  content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px;
+  border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: transform .15s;
+}
+.switch input:checked + i { background: var(--accent); }
+.switch input:checked + i::after { transform: translateX(20px); }
+.btn-danger {
+  color: var(--danger); border: 1px solid var(--danger); border-radius: 18px;
+  padding: 8px 16px; font-size: 13px;
+}
+.btn-danger:hover { background: rgba(217,48,37,.08); }
+.btn-line { color: var(--accent); border: 1px solid var(--border); border-radius: 18px; padding: 8px 16px; font-size: 13px; }
+.btn-line:hover { background: var(--menu-hover); }
+
+/* History / bookmark list */
+.list-search {
+  display: flex; align-items: center; gap: 10px; background: var(--field);
+  border-radius: 10px; height: 44px; padding: 0 14px; margin-bottom: 18px;
+}
+.list-search svg { width: 18px; height: 18px; color: var(--omni-sub); }
+.list-search input { flex: 1; border: 0; outline: 0; background: transparent; font-size: 14px; color: var(--page-fg); }
+.hgroup { margin-bottom: 20px; }
+.hday { font-size: 13px; font-weight: 500; color: var(--omni-sub); margin-bottom: 6px; }
+.hrow {
+  display: flex; align-items: center; gap: 12px; padding: 9px 6px; border-radius: 8px;
+  color: var(--page-fg); width: 100%; text-align: left;
+}
+.hrow:hover { background: var(--field); }
+.hrow img { width: 16px; height: 16px; flex: 0 0 auto; }
+.hrow .h-time { flex: 0 0 52px; font-size: 12px; color: var(--omni-sub); }
+.hrow .h-title { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13.5px; }
+.hrow .h-url { flex: 0 0 32%; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; color: var(--omni-sub); }
+.hrow .h-x { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; color: var(--omni-sub); flex: 0 0 auto; }
+.hrow .h-x:hover { background: var(--btn-hover); color: var(--danger); }
+.hrow .h-x svg { width: 14px; height: 14px; }
+.empty-note { text-align: center; color: var(--omni-sub); padding: 60px 0; font-size: 14px; }
+.bm-star { color: #f9ab00; }
+
+/* find-in-page highlight inside proxied docs */
+::selection { background: rgba(11,143,126,.25); }
+
+/* ============ Chrome-style error page (in-app) ============ */
+.err-wrap {
+  min-height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: 40px 26px;
+  text-align: center;
+}
+.err-face { font-size: 58px; line-height: 1; color: var(--page-fg); margin-bottom: 22px; }
+.err-h { font-size: 21px; font-weight: 400; color: var(--page-fg); margin-bottom: 14px; }
+.err-p { font-size: 14.5px; line-height: 1.55; color: var(--omni-sub); max-width: 480px; margin-bottom: 8px; }
+.err-detail { font-size: 12.5px; word-break: break-word; }
+.err-code { font-size: 12.5px; color: var(--omni-sub); font-family: ui-monospace, Menlo, monospace; margin: 18px 0 22px; }
+.err-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ============ Responsive ============ */
+@media (max-width: 600px) {
+  :root { --tab-h: 38px; --tool-h: 52px; }
+  .tab { flex: 1 0 44px; min-width: 40px; padding: 0 4px 0 7px; }
+  .tab .t-title { font-size: 11px; }
+  .tb-btn { width: 44px; height: 44px; }
+  .tb-btn svg { width: 21px; height: 21px; }
+  #btn-home { display: none !important; }
+  .hrow .h-url { display: none; }
+  #find-input { width: 130px; }
+  .nt-logo { width: 56px; height: 56px; margin-bottom: 20px; }
+}
+@media (min-width: 601px) {
+  #tg-btn { display: none; }
+}
+/* tabs button is primarily a phone feature — hide it on wide screens
+   unless the user explicitly picked button mode */
+@media (min-width: 601px) {
+  #app:not([data-tabui="button"]) #btn-tabs { display: none; }
+}
+
+/* ============ First-run setup ============ */
+#setup {
+  position: fixed; inset: 0; z-index: 2000;
+  background: var(--bg, #fff);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+#setup[hidden] { display: none; }
+.setup-card {
+  max-width: 420px; width: 100%;
+  background: var(--chrome, #fff);
+  border-radius: 20px;
+  padding: 34px 30px;
+  text-align: center;
+  box-shadow: 0 12px 48px rgba(0,0,0,.16);
+}
+.setup-card img { width: 64px; height: 64px; margin-bottom: 14px; }
+.setup-card h2 { font-size: 20px; font-weight: 500; margin: 0 0 10px; color: var(--text, #202124); }
+.setup-lead { font-size: 14px; line-height: 1.55; color: var(--omni-sub, #5f6368); margin: 0 0 22px; }
+#setup-url {
+  width: 100%; box-sizing: border-box;
+  padding: 13px 16px; font-size: 15px;
+  border-radius: 12px;
+  border: 1px solid var(--br, #dadce0);
+  background: var(--field, #f1f3f4);
+  color: var(--text, #202124);
+  outline: none; margin-bottom: 14px;
+}
+#setup-url:focus { border-color: #0fa895; }
+#setup-connect { width: 100%; padding: 13px; font-size: 15px; border: 0; margin-bottom: 6px; }
+#setup-msg { min-height: 20px; font-size: 13px; color: var(--danger, #d93025); margin-bottom: 4px; }
+.setup-hint { font-size: 12px; line-height: 1.5; color: var(--omni-sub, #5f6368); margin: 6px 0 0; }
+.setup-hint code { font-family: ui-monospace, Menlo, monospace; font-size: 11px; background: var(--field, #f1f3f4); padding: 1px 5px; border-radius: 5px; }
+
+</style>
+</head>
+<body>
+<div id="app" data-theme="system">
+
+  <!-- ======= TOP CHROME (the only chrome — nothing at the bottom) ======= -->
+  <header id="browser">
+
+    <!-- Tab strip -->
+    <div id="tabstrip">
+      <div id="tabs" role="tablist" aria-label="Tabs"></div>
+      <button id="newtab-btn" class="strip-btn" title="New tab (Ctrl+T)" aria-label="New tab">
+        <svg viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>
+      </button>
+    </div>
+
+    <!-- Toolbar (v6: no back/forward buttons — the phone's back
+         button drives navigation; tabs and menu swapped) -->
+    <div id="toolbar">
+      <button id="btn-reload" class="tb-btn" title="Reload (Ctrl+R)" aria-label="Reload">
+        <svg viewBox="0 0 24 24" class="ic-reload"><path d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.73 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+      </button>
+      <button id="btn-home" class="tb-btn" title="Home" aria-label="Home" hidden>
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      </button>
+
+      <!-- Omnibox -->
+      <div id="omnibox" class="">
+        <div id="omni-left">
+          <svg id="omni-lock" viewBox="0 0 24 24" title="Secure"><path d="M18 8h-1V6a5 5 0 0 0-10 0v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zm-6 9a2 2 0 1 1 2-2 2 2 0 0 1-2 2zm3-9H9V6a3 3 0 0 1 6 0z"/></svg>
+          <svg id="omni-search" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+        </div>
+        <input id="omnibox-input" type="text" spellcheck="false" autocomplete="off"
+               placeholder="Search or type URL" aria-label="Search or type URL">
+        <button id="omni-clear" title="Clear" aria-label="Clear" hidden>
+          <svg viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+        <button id="omni-star" title="Bookmark this page (Ctrl+D)" aria-label="Bookmark">
+          <svg viewBox="0 0 24 24"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        </button>
+        <div id="suggest" role="listbox" aria-label="Suggestions" hidden></div>
+      </div>
+
+      <!-- Tabs button — BEFORE the menu (v6: swapped with 3-dots) -->
+      <button id="btn-tabs" class="tb-btn" title="Switch tabs" aria-label="Open tab switcher" hidden>
+        <svg viewBox="0 0 24 24"><path d="M21 5H7a2 2 0 0 0-2 2v1H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm-3 13H4v-8h14zm3-3h-1V9a2 2 0 0 0-2-2H7V7h14z"/></svg>
+        <span id="tabs-badge">1</span>
+      </button>
+
+      <button id="btn-menu" class="tb-btn" title="Menu" aria-label="Menu" aria-haspopup="true">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+      </button>
+    </div>
+
+    <div id="progressbar"><i></i></div>
+  </header>
+
+  <!-- ======= PAGE VIEWPORT ======= -->
+  <main id="viewport"></main>
+
+  <!-- ======= Overlays (all anchored to the TOP — no bottom bars) ======= -->
+  <div id="menu" hidden></div>
+
+  <div id="findbar" hidden>
+    <input id="find-input" type="text" placeholder="Find in page" spellcheck="false" aria-label="Find in page">
+    <span id="find-count">0/0</span>
+    <button id="find-prev" title="Previous" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></button>
+    <button id="find-next" title="Next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg></button>
+    <button id="find-close" title="Close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+  </div>
+
+  <!-- Tab switcher overlay (v6: simple 2-column grid, X per cell,
+       larger + top-right, close-all) -->
+  <div id="tabgrid" hidden>
+    <div class="tg-head">
+      <span id="tg-count">Tabs</span>
+      <span class="tg-spacer"></span>
+      <button id="tg-close-all" class="tg-btn">Close all</button>
+      <button id="tg-new" class="tg-new" title="New tab" aria-label="New tab">
+        <svg viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>
+      </button>
+    </div>
+    <div id="tg-list"></div>
+  </div>
+
+  <!-- Dialogs -->
+  <dialog id="dlg">
+    <h3 id="dlg-title"></h3>
+    <div id="dlg-body"></div>
+    <div id="dlg-actions">
+      <button id="dlg-cancel" class="btn-ghost">Cancel</button>
+      <button id="dlg-ok" class="btn-primary">OK</button>
+    </div>
+  </dialog>
+
+  <!-- Downloads progress (v6) -->
+  <div id="dlbar" hidden></div>
+
+  <div id="toast" hidden></div>
+
+  <!-- First-run setup: connect this file to your worker -->
+  <div id="setup" hidden>
+    <div class="setup-card">
+      <img id="setup-logo" alt="Superwork">
+      <h2>Connect to your worker</h2>
+      <p class="setup-lead">This file is the Superwork browser. It loads sites through your own Cloudflare Worker — paste its URL below.</p>
+      <input id="setup-url" type="text" inputmode="url" spellcheck="false" autocomplete="off"
+             placeholder="https://superwork.yourname.workers.dev" aria-label="Worker URL">
+      <button id="setup-connect" class="btn-primary">Connect</button>
+      <div id="setup-msg" role="alert"></div>
+      <p class="setup-hint">Find it in the Cloudflare dashboard under Workers &amp; Pages, or run <code>npx wrangler deploy</code> and copy the URL it prints.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   Superwork 6.0 — Browser UI (Chrome-style, top bar only)
+   Standalone single-file client for a pure-API Cloudflare Worker.
+   ------------------------------------------------------------
+   v5 "zero navigation": pages are fetched via API calls and
+   rendered in sandboxed srcdoc iframes — the browser never
+   makes a navigation request, so networks that only allow
+   API traffic still work.
+   v6: full download pipeline (native save + re-save store),
+   on-open search setting, simplified 2-column tab grid, and
+   the phone's back button replaces the on-screen back/fwd.
+   ============================================================ */
+'use strict';
+
+(function () {
+  const APP_VERSION = '8.0.0';
+  const PREFIX = '/service/';
+  const LS = {
+    engine: 'superwork:engine', engines: 'superwork:customEngines', settings: 'superwork:settings',
+    tabs: 'superwork:tabs', history: 'superwork:history', bookmarks: 'superwork:bookmarks',
+    links: 'superwork:quicklinks', welcome: 'superwork:welcomeDone',
+    downloads: 'superwork:downloads'
+  };
+
+  /* ============================================================
+     Connection
+     ------------------------------------------------------------
+     This file renders every site through your Cloudflare Worker
+     (a pure API proxy) inside a sandboxed iframe — no service
+     worker, no same-origin requirements, works from file://.
+     The worker URL is user-configured and stored in localStorage.
+     ============================================================ */
+  const LS_WORKER = 'superwork:worker';
+  const LS_JAR = 'superwork:jar';
+  const LS_DSK = 'superwork:desktopHosts';
+  const ICON = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20128%20128%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230fa895%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230b8f7e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%22116%22%20height%3D%22116%22%20rx%3D%2228%22%20fill%3D%22url(%23g)%22%2F%3E%3Cpath%20d%3D%22M84.5%2045.8c-3.2-6.4-10.9-11-20.5-11-13%200-23%207.9-23%2019.2%200%2010.6%208.4%2016.3%2020.9%2019.5%2010.6%202.7%2014.2%205.2%2014.2%2010%200%205.4-5%208.9-12.6%208.9-8.2%200-14.9-3.6-18.3-10.4L32%2089.6c4.4%208.7%2013.6%2014.6%2026.2%2014.6h2.6c14.5%200%2025.3-7.8%2025.3-20.6%200-11.4-8.1-17-21.9-20.7-11.6-3.1-13.9-5.6-13.9-9.6%200-4.4%204.4-7.4%2011.3-7.4%206.6%200%2011.8%202.9%2014.7%208.3z%22%20fill%3D%22%23ffffff%22%2F%3E%3C%2Fsvg%3E';
+  let WORKER = '';                  /* worker origin, set at connect */
+
+  function normalizeWorkerUrl(u) {
+    let s = (u || '').trim();
+    if (!s) return '';
+    if (!/^https?:\/\//i.test(s)) s = 'https://' + s;
+    return s.replace(/\/+$/, '');
+  }
+  function savedWorker() {
+    return normalizeWorkerUrl(localStorage.getItem(LS_WORKER) || '');
+  }
+  async function testWorker(origin) {
+    /* v8: hard timeout — a busy or half-dead worker must never hang
+       the boot sequence (the app used to sit with an empty viewport
+       forever when the worker accepted the connection but stalled) */
+    try {
+      const ctrl = new AbortController();
+      const tm = setTimeout(() => { try { ctrl.abort(); } catch (e) { } }, 10000);
+      const r = await fetch(origin + '/', { cache: 'no-store', signal: ctrl.signal });
+      clearTimeout(tm);
+      if (!r.ok) return null;
+      const j = await r.json();
+      return (j && j.service === 'superwork') ? j : null;
+    } catch (e) { return null; }
+  }
+  /* absolute (or same-origin relative) URL for a /service/ path */
+  function svc(path) { return WORKER + path; }
+
+  /* ---------------- proxy cookie jar (iframe-mode persistence) ------
+     The worker keeps the live jar; this local copy preserves logins
+     across worker cold starts and app restarts, and is pushed to the
+     worker before every navigation. */
+  let jarTimer = null;
+  function cookieName(line) { try { return (line || '').split('=')[0].trim(); } catch (e) { return ''; } }
+  function jarLoad() { try { const v = JSON.parse(localStorage.getItem(LS_JAR) || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
+  function jarSave(list) { try { localStorage.setItem(LS_JAR, JSON.stringify(list.slice(-800))); } catch (e) { } }
+  function jarMerge(list) {
+    const map = new Map();
+    for (const it of jarLoad()) map.set(it.u + '\n' + cookieName(it.c), it);
+    for (const it of (list || [])) map.set(it.u + '\n' + cookieName(it.c), it);
+    const out = [...map.values()];
+    jarSave(out);
+    return out;
+  }
+  function jarAdd(u, c) { jarMerge([{ u, c }]); }
+  function desktopHosts() {
+    try { const v = JSON.parse(localStorage.getItem(LS_DSK) || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
+  function syncJar(extra) {
+    if (!WORKER) return Promise.resolve();
+    return fetch(WORKER + '/jar', {
+      method: 'POST',
+      headers: { 'content-type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(Object.assign({
+        cookies: jarLoad(), ua: desktopHosts(),
+        dflt: !!settings().desktopDefault, ads: !!settings().blockAds
+      }, extra || {}))
+    }).then(r => r.json()).then(j => {
+      if (j && Array.isArray(j.jar)) jarMerge(j.jar);
+    }).catch(() => { });
+  }
+  function queueJarSync() {
+    clearTimeout(jarTimer);
+    jarTimer = setTimeout(() => { jarTimer = null; syncJar(); }, 600);
+  }
+
+  /* ---------------- per-origin site storage relay ----------------
+     Sandboxed srcdoc frames cannot touch real localStorage — the
+     hook mirrors writes here ("sw:<tag>:<origin>:" keys) and we
+     send the snapshot back through the x-sw-store header so the
+     worker can seed the next page load. sessionStorage is kept
+     in memory for the app session. */
+  const memSS = {};
+  function storeFor(url) {
+    try {
+      const ob = b64e(new URL(url).origin);
+      const out = { ls: {}, ss: {} };
+      const pre = 'sw:ls:' + ob + ':';
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.indexOf(pre) === 0) out.ls[k.slice(pre.length)] = localStorage.getItem(k);
+      }
+      const ss = memSS[ob] || {};
+      Object.keys(ss).forEach(k => { out.ss[k] = ss[k]; });
+      if (!Object.keys(out.ls).length && !Object.keys(out.ss).length) return null;
+      const payload = b64e(JSON.stringify(out));
+      return payload.length > 24000 ? null : payload;
+    } catch (e) { return null; }
+  }
+  function hostOf(u) { try { return new URL(u).hostname; } catch (e) { return String(u || '').slice(0, 100); } }
+
+  /* ============================================================
+     Downloads (v6) — every download is fetched through the worker
+     as a plain API request, streamed into a Blob, then handed to
+     the browser's REAL download manager via a blob: <a download>
+     (native "save to device" on the phone, the moment it
+     finishes). The last 5 files are kept — metadata in
+     localStorage, blobs in IndexedDB when available, otherwise in
+     memory for the session — so any of them can be saved again
+     from Settings → Downloads.
+     ============================================================ */
+  const DL_MAX = 5;
+  let dlIdb = null;            /* IndexedDB handle (feature-detected) */
+  const dlMem = new Map();     /* session fallback for blobs */
+
+  function dlIdbInit() {
+    return new Promise((resolve) => {
+      let settled = false;
+      const done = (v) => { if (!settled) { settled = true; resolve(v); } };
+      try {
+        const req = indexedDB.open('superwork-dl', 1);
+        req.onupgradeneeded = () => { try { req.result.createObjectStore('files'); } catch (e) { } };
+        req.onsuccess = () => { dlIdb = req.result; done(true); };
+        req.onerror = () => done(false);
+        req.onblocked = () => done(false);
+        setTimeout(() => done(false), 2500);
+      } catch (e) { done(false); }
+    });
+  }
+  function dlBlobPut(id, blob) {
+    dlMem.set(id, blob);
+    if (!dlIdb) return;
+    try {
+      dlIdb.transaction('files', 'readwrite').objectStore('files').put(blob, id);
+    } catch (e) { }
+  }
+  function dlBlobGet(id) {
+    return new Promise((resolve) => {
+      if (dlMem.has(id)) { resolve(dlMem.get(id)); return; }
+      if (!dlIdb) { resolve(null); return; }
+      try {
+        const rq = dlIdb.transaction('files', 'readonly').objectStore('files').get(id);
+        rq.onsuccess = () => resolve(rq.result || null);
+        rq.onerror = () => resolve(null);
+      } catch (e) { resolve(null); }
+    });
+  }
+  function dlBlobDel(id) {
+    dlMem.delete(id);
+    if (!dlIdb) return;
+    try { dlIdb.transaction('files', 'readwrite').objectStore('files').delete(id); } catch (e) { }
+  }
+  function dlMeta() { return loadJSON(LS.downloads, []); }
+  function dlMetaSave(list) { saveJSON(LS.downloads, list.slice(-DL_MAX)); }
+  function dlAddMeta(item) {
+    let list = dlMeta().filter(x => x.id !== item.id);
+    list.push(item);
+    while (list.length > DL_MAX) dlBlobDel(list.shift().id); /* evict oldest */
+    dlMetaSave(list);
+    return list;
+  }
+  function dlClearAll() {
+    dlMeta().forEach(x => dlBlobDel(x.id));
+    dlMetaSave([]);
+    dlMem.clear();
+    if (dlIdb) { try { dlIdb.transaction('files', 'readwrite').objectStore('files').clear(); } catch (e) { } }
+  }
+
+  function fmtSize(n) {
+    n = Number(n);
+    if (!isFinite(n)) return '';
+    if (n < 1024) return n + ' B';
+    if (n < 1048576) return (n / 1024).toFixed(1) + ' KB';
+    if (n < 1073741824) return (n / 1048576).toFixed(1) + ' MB';
+    return (n / 1073741824).toFixed(2) + ' GB';
+  }
+  /* filename from a Content-Disposition header */
+  function cdFilename(cd) {
+    if (!cd) return '';
+    let m = /filename\*\s*=\s*([^;]+)/i.exec(cd);
+    if (m) {
+      try {
+        const v = m[1].trim().replace(/^utf-8/i, '').replace(/^''/, '');
+        return decodeURIComponent(v);
+      } catch (e) { }
+    }
+    m = /filename\s*=\s*"([^"]*)"|filename\s*=\s*([^;]+)/i.exec(cd);
+    if (m) return (m[1] !== undefined ? m[1] : m[2]).trim().replace(/^\.+/, '');
+    return '';
+  }
+  function urlBasename(u) {
+    try {
+      const p = decodeURIComponent(new URL(u).pathname.split('/').pop() || '').split('?')[0];
+      return (p && p.length <= 120) ? p : '';
+    } catch (e) { return ''; }
+  }
+  /* Chrome-like: a URL basename without an extension gets one from
+     the MIME type ("…/dl/pdf" + application/pdf → "pdf.pdf") */
+  const MIME_EXT = {
+    'application/pdf': '.pdf', 'application/zip': '.zip', 'application/x-zip-compressed': '.zip',
+    'application/gzip': '.gz', 'application/x-tar': '.tar', 'application/octet-stream': '.bin',
+    'application/json': '.json', 'text/plain': '.txt', 'text/csv': '.csv', 'text/html': '.html',
+    'image/png': '.png', 'image/jpeg': '.jpg', 'image/gif': '.gif', 'image/webp': '.webp',
+    'image/svg+xml': '.svg', 'audio/mpeg': '.mp3', 'audio/ogg': '.ogg', 'audio/wav': '.wav',
+    'video/mp4': '.mp4', 'video/webm': '.webm', 'application/vnd.rar': '.rar',
+    'application/x-7z-compressed': '.7z', 'application/epub+zip': '.epub'
+  };
+  function withMimeExt(name, mime) {
+    name = String(name || 'download');
+    if (/\.[a-z0-9]{1,5}$/i.test(name)) return name;
+    const ext = MIME_EXT[(mime || '').split(';')[0].trim().toLowerCase()];
+    return ext ? name + ext : name;
+  }
+
+  /* ============================================================
+     v7: native Save-As. Where the File System Access API is
+     available (Chrome), showSaveFilePicker() opens the REAL
+     folder chooser — "which folder on my phone". Long downloads
+     outlast the browser's transient-activation window, so when
+     the picker cannot open directly a small prompt re-acquires a
+     tap and the picker opens from it. Engines without the picker
+     fall back to the blob <a download> push (the phone's download
+     manager). Every file is kept in the store either way, so
+     Settings → Downloads can re-save (also via the picker).
+     ============================================================ */
+  const canPick = typeof window.showSaveFilePicker === 'function';
+
+  function saveViaAnchor(blob, name) {
+    try {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name || 'download';
+      a.rel = 'noopener';
+      a.style.position = 'fixed';
+      a.style.left = '-9999px';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { try { a.remove(); URL.revokeObjectURL(url); } catch (e) { } }, 20000);
+      return true;
+    } catch (e) { return false; }
+  }
+  function saveViaPicker(blob, name) {
+    return window.showSaveFilePicker({ suggestedName: name || 'download' }).then(async (h) => {
+      const w = await h.createWritable();
+      await w.write(blob);
+      await w.close();
+      return true;
+    });
+  }
+  /* tiny prompt shown when the picker needs a fresh tap */
+  function saveAsPrompt(name) {
+    return new Promise((resolve) => {
+      const p = el('div', 'saveas');
+      const card = el('div', 'saveas-card');
+      card.appendChild(el('div', 'saveas-title', 'Download complete'));
+      card.appendChild(el('div', 'saveas-name', esc(name || 'download')));
+      card.appendChild(el('div', 'saveas-sub', 'Choose where to save this file on your device.'));
+      const pick = el('button', 'btn-primary saveas-btn', 'Choose folder…');
+      const dl = el('button', 'btn-ghost saveas-btn', 'Save to Downloads');
+      const later = el('button', 'btn-ghost saveas-btn', 'Keep for later');
+      card.append(pick, dl, later);
+      p.appendChild(card);
+      const done = (v) => { try { p.remove(); } catch (e) { } resolve(v); };
+      pick.addEventListener('click', () => done('pick'));
+      dl.addEventListener('click', () => done('downloads'));
+      later.addEventListener('click', () => done('later'));
+      document.body.appendChild(p);
+    });
+  }
+  /* returns a promise: true = saved to the device, false = kept in store */
+  function hasActivation() {
+    try { return !!(navigator.userActivation && navigator.userActivation.isActive); }
+    catch (e) { return false; }
+  }
+  async function nativeSave(blob, name) {
+    if (!canPick) return saveViaAnchor(blob, name);
+    /* only call the picker directly when a live user gesture exists —
+       a picker call without activation is at best rejected and at
+       worst can stall the page while a dialog waits */
+    if (!hasActivation()) {
+      try {
+        const choice = await saveAsPrompt(name);
+        if (choice === 'pick') {
+          try { await saveViaPicker(blob, name); return true; }
+          catch (e2) {
+            if ((e2 && e2.name) === 'AbortError') return false;
+            return saveViaAnchor(blob, name);
+          }
+        }
+        if (choice === 'downloads') return saveViaAnchor(blob, name);
+        return false;
+      } catch (e3) { return saveViaAnchor(blob, name); }
+    }
+    try {
+      await saveViaPicker(blob, name);
+      return true;
+    } catch (err) {
+      const en = (err && err.name) || '';
+      if (en === 'AbortError') return false; /* user closed the picker */
+      /* activation expired mid-download or a security refusal —
+         re-acquire a tap, then the real picker opens */
+      try {
+        const choice = await saveAsPrompt(name);
+        if (choice === 'pick') {
+          try { await saveViaPicker(blob, name); return true; }
+          catch (e2) {
+            if ((e2 && e2.name) === 'AbortError') return false;
+            return saveViaAnchor(blob, name);
+          }
+        }
+        if (choice === 'downloads') return saveViaAnchor(blob, name);
+        return false;
+      } catch (e3) { return saveViaAnchor(blob, name); }
+    }
+  }
+
+  /* progress card in the bottom downloads bar */
+  function dlCard(name) {
+    const bar = $('#dlbar');
+    bar.hidden = false;
+    const card = el('div', 'dl-card');
+    const ico = el('div', 'dl-ico');
+    ico.appendChild(svgIcon(ICONS.download, 18));
+    const mid = el('div', 'dl-mid');
+    const nm = el('div', 'dl-name', esc(name || 'download'));
+    const sub = el('div', 'dl-sub', 'Starting…');
+    const track = el('div', 'dl-track');
+    const fill = el('i');
+    track.appendChild(fill);
+    mid.append(nm, sub, track);
+    const x = el('button', 'dl-x');
+    x.type = 'button';
+    x.title = 'Cancel download';
+    x.appendChild(svgIcon(ICONS.close, 15));
+    card.append(ico, mid, x);
+    bar.appendChild(card);
+    return {
+      card, sub, fill,
+      setName(n) { nm.textContent = n; },
+      set(pct, txt) {
+        if (txt != null) sub.textContent = txt;
+        if (pct != null) fill.style.width = Math.max(0, Math.min(100, pct)) + '%';
+      },
+      done(msg) {
+        card.classList.add('done');
+        ico.innerHTML = '';
+        ico.appendChild(svgIcon(ICONS.check, 18));
+        sub.textContent = msg || 'Saved';
+        fill.style.width = '100%';
+        try { x.remove(); } catch (e) { }
+        setTimeout(() => { card.remove(); if (!bar.children.length) bar.hidden = true; }, 2800);
+      },
+      fail(msg) {
+        card.classList.add('done');
+        sub.textContent = msg || 'Failed';
+        fill.style.width = '100%';
+        setTimeout(() => { card.remove(); if (!bar.children.length) bar.hidden = true; }, 2800);
+      },
+      onCancel(fn) { x.addEventListener('click', (e) => { e.stopPropagation(); fn(); }); }
+    };
+  }
+
+  /* stream a fetched response into a blob, save natively + store */
+  function pumpDownload(r, url, name, card, ctrl) {
+    const cd = r.headers.get('content-disposition') || '';
+    const type = (r.headers.get('content-type') || '').split(';')[0].trim() || 'application/octet-stream';
+    const nm = name || withMimeExt(cdFilename(cd) || urlBasename(url) || 'download', type);
+    const len = parseInt(r.headers.get('x-sw-len') || r.headers.get('content-length') || '0', 10);
+    card.setName(nm);
+    const finish = (data) => {
+      const blob = data instanceof Blob ? data : new Blob(data, { type });
+      const id = 'dl' + Date.now() + Math.floor(Math.random() * 1e4);
+      dlBlobPut(id, blob);             /* keep for re-saving */
+      dlAddMeta({ id, name: nm, mime: type, size: blob.size, url: url, ts: Date.now() });
+      if (tab() && tab().internal === 'settings') refreshDownloadsSection();
+      /* v7: native Save-As — the picker opens the moment the file
+         completes (a fresh tap is requested if the activation
+         window expired mid-download) */
+      if (canPick) {
+        card.set(100, 'Choosing where to save…');
+        nativeSave(blob, nm).then((ok) => {
+          if (ok) card.done('Saved · ' + fmtSize(blob.size));
+          else card.done('Kept — re-save from Settings');
+        });
+      } else {
+        nativeSave(blob, nm);          /* push to the phone right now */
+        card.done('Saved · ' + fmtSize(blob.size));
+      }
+    };
+    if (!r.body || typeof r.body.getReader !== 'function') {
+      return r.blob().then(finish);
+    }
+    const reader = r.body.getReader();
+    const chunks = [];
+    let recv = 0;
+    let cancelled = false;
+    /* loadTab-classified downloads have no AbortController — the
+       card's X cancels the stream reader directly */
+    if (!ctrl) card.onCancel(function () {
+      cancelled = true;
+      try { reader.cancel(); } catch (e) { }
+      card.fail('Cancelled');
+    });
+    const pump = () => reader.read().then((step) => {
+      if (cancelled) return;
+      if (step.done) { finish(chunks); return; }
+      chunks.push(step.value);
+      recv += step.value.byteLength;
+      if (len > 0) card.set(recv / len * 100, fmtSize(recv) + ' of ' + fmtSize(len));
+      else card.set(null, fmtSize(recv) + ' downloaded…');
+      return pump();
+    });
+    return pump().catch((err) => {
+      if (ctrl && ctrl.signal && ctrl.signal.aborted) { card.fail('Cancelled'); return; }
+      card.fail('Failed — ' + String((err && err.message) || err).slice(0, 60));
+    });
+  }
+
+  /* fetch a URL through the worker and download it */
+  function startDownload(url, opts) {
+    opts = opts || {};
+    if (!WORKER) { toast('Not connected to a worker'); return; }
+    const card = dlCard(opts.filename || urlBasename(url) || 'download');
+    const ctrl = new AbortController();
+    card.onCancel(() => { try { ctrl.abort(); } catch (e) { } card.fail('Cancelled'); });
+    syncJar().catch(() => { }).then(() =>
+      fetch(svc(encUrl(url)), {
+        signal: ctrl.signal,
+        headers: { accept: '*/*' },
+        cache: 'no-store'
+      })
+    ).then((r) => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return pumpDownload(r, r.headers.get('x-sw-final-url') || url, opts.filename || '', card, ctrl);
+    }).catch((err) => {
+      if (ctrl.signal.aborted) return;
+      card.fail('Failed — ' + String((err && err.message) || err).slice(0, 60));
+    });
+  }
+
+  /* data:/blob: payloads relayed by the hook (page-generated files) */
+  function downloadFromDataUrl(dataUrl, filename) {
+    const name = filename || 'download';
+    const card = dlCard(name);
+    fetch(dataUrl).then((r) => r.blob()).then((blob) => {
+      const id = 'dl' + Date.now() + Math.floor(Math.random() * 1e4);
+      dlBlobPut(id, blob);
+      dlAddMeta({ id, name, mime: blob.type || 'application/octet-stream', size: blob.size, url: '', ts: Date.now() });
+      if (tab() && tab().internal === 'settings') refreshDownloadsSection();
+      if (canPick) {
+        card.set(100, 'Choosing where to save…');
+        nativeSave(blob, name).then((ok) => {
+          if (ok) card.done('Saved · ' + fmtSize(blob.size));
+          else card.done('Kept — re-save from Settings');
+        });
+      } else {
+        nativeSave(blob, name);
+        card.done('Saved · ' + fmtSize(blob.size));
+      }
+    }).catch(() => card.fail('Failed'));
+  }
+
+  async function reSaveDownload(item) {
+    const blob = await dlBlobGet(item.id);
+    if (blob) {
+      toast('Choose where to save ' + item.name);
+      const ok = await nativeSave(blob, item.name);
+      if (ok) toast('Saved ' + item.name);
+      else toast('Not saved — still in Downloads');
+      return;
+    }
+    if (item.url) { startDownload(item.url, { filename: item.name }); return; }
+    toast('File data is no longer available');
+  }
+  function removeDownload(id) {
+    dlBlobDel(id);
+    dlMetaSave(dlMeta().filter(x => x.id !== id));
+    refreshDownloadsSection();
+  }
+  function refreshDownloadsSection() {
+    const t = tab();
+    if (!t || t.internal !== 'settings') return;
+    const host = document.getElementById('dl-list');
+    if (host) {
+      const wrap = host.closest('.set-wrap');
+      if (wrap) { wrap.innerHTML = ''; renderSettings(wrap); }
+    }
+  }
+
+  /* response classification: does this response belong to the
+     download manager instead of a rendered page? */
+  function dlRenderable(ct) {
+    if (!ct) return false;
+    if (/^(image|video|audio)\//.test(ct)) return true;
+    if (/^text\//.test(ct)) return true;
+    if (/(json|xml|javascript|ecmascript)(;|$|\+)/.test(ct)) return true;
+    return false;
+  }
+  function isDownloadResponse(cd, ct) {
+    if (/\battachment\b/i.test(cd)) return true;
+    if (ct.indexOf('html') >= 0 || ct.indexOf('xml') >= 0 || ct === '') return false;
+    return !dlRenderable(ct);   /* pdf, zip, octet-stream, fonts, … */
+  }
+
+  /* a navigation turned out to be a download — undo the history
+     push (the previous page is still on screen, untouched) and let
+     the download manager take over */
+  function revertTabForDownload(t, opts) {
+    toast('Downloading…');
+    if (opts && opts.push && t.hist && t.hist.length > 1) {
+      t.hist.pop();
+      t.hidx = t.hist.length - 1;
+      const entry = t.hist[t.hidx] || {};
+      if (entry.url) { t.url = entry.url; if (entry.title) t.title = entry.title; }
+      else if (entry.internal) { t.kind = 'internal'; t.internal = entry.internal; t.url = null; }
+    } else if (t.hist && t.hist.length <= 1 && t.kind === 'web') {
+      /* transient tab (window.open / direct entry) — close it like
+         real browsers do when a popup turns out to be a file */
+      closeTab(t.id);
+      syncOmnibox(); updateNavState(); renderTabs(); persistTabs();
+      return;
+    }
+    syncOmnibox(); updateNavState(); renderTabs(); persistTabs();
+  }
+
+
+  /* ---------------- Search engines ---------------- */
+  const ENGINES = [
+    { id: 'duckduckgo', name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=%s', suggest: 'https://duckduckgo.com/ac/?q=%s&type=list', home: 'https://duckduckgo.com/' },
+    { id: 'brave', name: 'Brave Search', url: 'https://search.brave.com/search?q=%s', suggest: 'https://search.brave.com/api/suggest?q=%s', home: 'https://search.brave.com/' },
+    { id: 'bing', name: 'Bing', url: 'https://www.bing.com/search?q=%s', suggest: 'https://www.bing.com/osjson.aspx?query=%s', home: 'https://www.bing.com/' },
+    { id: 'google', name: 'Google', url: 'https://www.google.com/search?q=%s', suggest: 'https://suggestqueries.google.com/complete/search?client=firefox&q=%s', home: 'https://www.google.com/' },
+    { id: 'startpage', name: 'Startpage', url: 'https://www.startpage.com/sp/search?query=%s', suggest: null, home: 'https://www.startpage.com/' },
+    { id: 'ecosia', name: 'Ecosia', url: 'https://www.ecosia.org/search?q=%s', suggest: 'https://ac.ecosia.org/autocomplete?q=%s', home: 'https://www.ecosia.org/' },
+    { id: 'mojeek', name: 'Mojeek', url: 'https://www.mojeek.com/search?q=%s', suggest: 'https://www.mojeek.com/suggest?q=%s&fmt=json', home: 'https://www.mojeek.com/' },
+    { id: 'qwant', name: 'Qwant', url: 'https://www.qwant.com/?q=%s', suggest: null, home: 'https://www.qwant.com/' },
+    { id: 'yahoo', name: 'Yahoo', url: 'https://search.yahoo.com/search?p=%s', suggest: 'https://search.yahoo.com/sugg/gossip/gossip-us-ura/?output=sd1&nresults=5&command=%s', home: 'https://search.yahoo.com/' },
+    { id: 'yandex', name: 'Yandex', url: 'https://yandex.com/search/?text=%s', suggest: 'https://yandex.com/suggest/suggest-ff?part=%s', home: 'https://yandex.com/' },
+    { id: 'ask', name: 'Ask.com', url: 'https://www.ask.com/web?q=%s', suggest: null, home: 'https://www.ask.com/' },
+    { id: 'presearch', name: 'Presearch', url: 'https://presearch.com/search?q=%s', suggest: null, home: 'https://presearch.com/' },
+    { id: 'searxng', name: 'SearXNG', url: 'https://searx.be/search?q=%s', suggest: null, home: 'https://searx.be/' },
+    { id: 'wikipedia', name: 'Wikipedia', url: 'https://en.wikipedia.org/w/index.php?search=%s', suggest: 'https://en.wikipedia.org/w/api.php?action=opensearch&limit=6&search=%s', home: 'https://en.wikipedia.org/' }
+  ];
+  function allEngines() {
+    let custom = [];
+    try { custom = JSON.parse(localStorage.getItem(LS.engines) || '[]'); } catch (e) { }
+    return ENGINES.concat(custom);
+  }
+  function getEngine(id) {
+    return allEngines().find(e => e.id === id) || ENGINES[0];
+  }
+  function currentEngine() {
+    return getEngine(localStorage.getItem(LS.engine) || 'duckduckgo');
+  }
+
+  /* ---------------- Settings ---------------- */
+  const DEFAULT_SETTINGS = {
+    theme: 'system', showHome: false, homepage: '', blockAds: true,
+    startup: 'newtab', desktopDefault: false,
+    tabUi: 'button', openWith: 'newtab', zoom: 1
+  };
+  function settings() {
+    let s;
+    try { s = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(localStorage.getItem(LS.settings) || '{}')); }
+    catch (e) { s = Object.assign({}, DEFAULT_SETTINGS); }
+    /* v6 migration: the old "searchOpen: home" choice becomes the
+       new "open with the engine website" startup mode */
+    if (s.searchOpen === 'home' && !s.openWith) s.openWith = 'engine';
+    /* v6 one-time: the tabs button is the primary phone UI now */
+    try {
+      if (s.tabUi === 'strip' && !localStorage.getItem('superwork:tabui6')) {
+        s.tabUi = 'button';
+        localStorage.setItem('superwork:tabui6', '1');
+        localStorage.setItem(LS.settings, JSON.stringify(s));
+      }
+    } catch (e) { }
+    return s;
+  }
+  function saveSettings(patch) {
+    const s = Object.assign(settings(), patch);
+    try { localStorage.setItem(LS.settings, JSON.stringify(s)); } catch (e) { }
+    applyTheme();
+    applyChromeToggles();
+    return s;
+  }
+
+  /* ---------------- storage helpers ---------------- */
+  function loadJSON(key, fallback) {
+    try { const v = JSON.parse(localStorage.getItem(key) || 'null'); return v == null ? fallback : v; }
+    catch (e) { return fallback; }
+  }
+  function saveJSON(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) { }
+  }
+
+  /* ---------------- codec ---------------- */
+  function b64e(str) {
+    const bytes = new TextEncoder().encode(str);
+    let bin = '';
+    for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+  function b64d(str) {
+    let s = String(str).replace(/-/g, '+').replace(/_/g, '/');
+    while (s.length % 4) s += '=';
+    const bin = atob(s);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function encUrl(u) { return PREFIX + b64e(u); }
+  function decServicePath(p) {
+    if (!p || p.indexOf(PREFIX) !== 0) return null;
+    try { const u = b64d(p.slice(PREFIX.length)); return /^https?:\/\//i.test(u) ? u : null; }
+    catch (e) { return null; }
+  }
+
+  /* ---------------- DOM helpers ---------------- */
+  const $ = (s) => document.querySelector(s);
+  const el = (tag, cls, html) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html != null) n.innerHTML = html;
+    return n;
+  };
+  const svgIcon = (path, size) => {
+    const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    s.setAttribute('viewBox', '0 0 24 24');
+    if (size) { s.setAttribute('width', size); s.setAttribute('height', size); }
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p.setAttribute('d', path);
+    s.appendChild(p);
+    return s;
+  };
+  const ICONS = {
+    search: 'M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z',
+    history: 'M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6a7 7 0 1 1 7 7 6.96 6.96 0 0 1-4.95-2.05l-1.42 1.42A8.95 8.95 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z',
+    bookmark: 'm12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z',
+    find: 'M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z',
+    desktop: 'M21 2H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7l-2 3v1h8v-1l-2-3h7a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 14H3V4h18v12z',
+    share: 'M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z',
+    settings: 'M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z',
+    close: 'M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z',
+    tab: 'M21 3H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM21 19H3V5h10v2h8v12z',
+    download: 'M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z',
+    globe: 'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14A7.82 7.82 0 0 1 4 12c0-.69.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.987 7.987 0 0 1 5.08 16zm2.95-8H5.08a7.987 7.987 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z',
+    check: 'M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z',
+    info: 'M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'
+  };
+
+  function faviconFor(url) {
+    try {
+      const host = new URL(url).hostname;
+      return svc('/service/' + b64e('https://icons.duckduckgo.com/ip3/' + host + '.ico'));
+    } catch (e) { return ICON; }
+  }
+
+  /* ============================================================
+     Tab model
+     ============================================================
+     tab = { id, kind: 'web'|'internal', url, title, favicon,
+             internal: 'newtab'|'settings'|'history'|'bookmarks',
+             viewEl, iframe, loaded }                            */
+  let tabs = [];
+  let activeId = null;
+  let tabSeq = 1;
+  const closedStack = [];
+
+  function tab() { return tabs.find(t => t.id === activeId); }
+
+  function newTab(opts) {
+    opts = opts || {};
+    const id = tabSeq++;
+    const view = el('div', 'tab-view');
+    view.dataset.tabId = id;
+    $('#viewport').appendChild(view);
+
+    const t = {
+      id, kind: opts.url ? 'web' : 'internal',
+      url: opts.url || null,
+      internal: opts.url ? null : (opts.internal || 'newtab'),
+      title: opts.title || (opts.url ? opts.url : 'New Tab'),
+      favicon: opts.favicon || null,
+      viewEl: view, iframe: null,
+      loaded: false, desktop: opts.desktop || false, lazyUrl: null,
+      hist: [{ url: opts.url || null, title: opts.title || opts.url || 'New Tab' }], hidx: 0
+    };
+    tabs.push(t);
+    renderTabs();
+
+    if (opts.lazy) {
+      t.lazyUrl = t.url;
+      t.loaded = true; /* considered settled; iframe spawns on activation */
+    } else {
+      populateTab(t);
+    }
+    activateTab(id);
+    persistTabs();
+    return t;
+  }
+
+  function populateTab(t) {
+    if (t.kind === 'web' && t.url) {
+      t.loaded = false;
+      startProgress(t.id);
+      loadTab(t, {});
+    } else {
+      const d = el('div', 'internal');
+      t.viewEl.appendChild(d);
+      renderInternal(t, d);
+    }
+  }
+
+  /* ============================================================
+     v5 page loader — fetch() the rewritten document through the
+     worker (a pure API request) and render it in a sandboxed
+     srcdoc iframe. The frame NEVER navigates.
+     ============================================================ */
+  function loadTab(t, opts) {
+    opts = opts || {};
+    const url = opts.url || t.url;
+    if (!url) return;
+    t.kind = 'web'; t.internal = null;
+    t.url = url; t.title = opts.title || url; t.favicon = null;
+    t.loaded = false; t.awaitHello = true; t.isBlob = false;
+    if (opts.push) {
+      t.hist = (t.hist || []).slice(0, (t.hidx == null ? -1 : t.hidx) + 1);
+      t.hist.push({ url, title: url });
+      t.hidx = t.hist.length - 1;
+    }
+    const seq = (t.loadSeq = (t.loadSeq || 0) + 1);
+    syncOmnibox(); renderTabs(); updateNavState(); persistTabs();
+
+    /* push the cookie jar first so a cold isolate has the session
+       cookies before the document request lands */
+    syncJar().catch(() => { }).then(() => {
+      if (t.loadSeq !== seq) return;
+      const init = {
+        method: opts.method || 'GET',
+        headers: { accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' },
+        cache: 'no-store'
+      };
+      if (opts.body != null) init.body = opts.body;
+      const st = storeFor(url);
+      if (st) init.headers['x-sw-store'] = st;
+      return fetch(svc(encUrl(url)), init).then(async (r) => {
+        if (t.loadSeq !== seq) return;
+        const errCode = r.headers.get('x-sw-error');
+        if (errCode) {
+          let detail = '';
+          try { const j = await r.json(); if (j && j.error) detail = j.error; } catch (e) { }
+          renderTabError(t, { code: errCode, detail, host: hostOf(url) });
+          return;
+        }
+        if (!r.ok) {
+          let detail = '', code = 'ERR_HTTP_' + r.status;
+          try { const j = await r.json(); if (j && j.error) { detail = j.error; code = j.code || code; } } catch (e) { }
+          renderTabError(t, { code, detail, host: hostOf(url) });
+          return;
+        }
+        const finalUrl = r.headers.get('x-sw-final-url');
+        const cd = r.headers.get('content-disposition') || '';
+        const ct = (r.headers.get('content-type') || '').toLowerCase();
+        /* v6: attachments / PDFs / archives → the download manager
+           (the previous page stays on screen — the frame is only
+           swapped after a RENDER decision, so nothing to undo) */
+        if (isDownloadResponse(cd, ct)) {
+          if (finalUrl && /^https?:/i.test(finalUrl)) t.url = finalUrl;
+          const name = cdFilename(cd) || urlBasename(finalUrl || url) || 'download';
+          revertTabForDownload(t, opts);
+          pumpDownload(r, finalUrl || url, name, dlCard(name), null);
+          return;
+        }
+        if (finalUrl && /^https?:/i.test(finalUrl)) t.url = finalUrl;
+        if (ct.indexOf('html') < 0 && ct.indexOf('xml') < 0 && ct !== '') {
+          /* non-HTML but renderable (image, video, audio, plain
+             text, json) — local blob view, like a real browser */
+          const blob = await r.blob();
+          if (t.loadSeq !== seq) return;
+          swapFrame(t, URL.createObjectURL(blob), true);
+          syncOmnibox(); updateNavState(); renderTabs();
+          return;
+        }
+        const html = await r.text();
+        if (t.loadSeq !== seq) return;
+        swapFrame(t, html, false);
+        syncOmnibox(); updateNavState(); renderTabs();
+      });
+    }).catch((err) => {
+      if (t.loadSeq !== seq) return;
+      renderTabError(t, { code: 'ERR_WORKER_UNREACHABLE', detail: String((err && err.message) || err), host: hostOf(url) });
+    });
+  }
+
+  function swapFrame(t, content, isBlob) {
+    /* v8: a page swap retires the old document — its relayed workers
+       (if any) must die with it, exactly like real browser workers */
+    killTabWorkers(t);
+    if (t.iframe) { try { t.iframe.remove(); } catch (e) { } t.iframe = null; }
+    t.viewEl.innerHTML = '';
+    const f = document.createElement('iframe');
+    f.setAttribute('allow', 'autoplay; clipboard-read; clipboard-write; encrypted-media; fullscreen; picture-in-picture');
+    /* hard isolation: the page can never escape into the app or
+       navigate the top frame; all communication is postMessage. */
+    f.setAttribute('sandbox',
+      'allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads allow-presentation');
+    f.addEventListener('load', () => onFrameLoad(t));
+    t.iframe = f;
+    t.isBlob = !!isBlob;
+    applyZoomToFrame(f, getZoom());
+    if (isBlob) {
+      t.awaitHello = false; /* blob documents carry no hook */
+      f.src = content;
+    } else {
+      f.srcdoc = content;
+    }
+    t.viewEl.appendChild(f);
+  }
+
+  /* escape detection: the hook always reports in (phase 'start')
+     before the load event. Silence after load means the frame
+     navigated itself somewhere raw (a blocked direct URL).
+     v6: every frame load also re-arms the back guard — the guard
+     entry must stay at the TIP of the history so a back press
+     always lands on it (capturing the live page state) instead of
+     traversing into the iframe's own entries. */
+  function onFrameLoad(t) {
+    armBackGuard();
+    const seq = t.loadSeq;
+    setTimeout(() => {
+      if (t.loadSeq !== seq || !t.iframe || t.kind !== 'web') return;
+      if (t.awaitHello) {
+        t.escapes = (t.escapes || 0) + 1;
+        if (t.escapes > 2) {
+          renderTabError(t, {
+            code: 'ERR_DIRECT_NAV_BLOCKED',
+            detail: 'This site kept trying to open a page directly instead of through the proxy, which your network blocks.',
+            host: hostOf(t.url)
+          });
+        } else {
+          toast('Reloading through the proxy…');
+          loadTab(t, { url: t.url });
+        }
+      }
+    }, 900);
+  }
+
+  function renderTabError(t, info) {
+    if (t.iframe) { try { t.iframe.remove(); } catch (e) { } t.iframe = null; }
+    t.viewEl.innerHTML = '';
+    t.awaitHello = false; t.isBlob = false; t.loaded = true;
+    stopProgress(t.id);
+    t.title = info.code || 'Error';
+    const d = el('div', 'internal');
+    d.appendChild(buildErrorPage(t, info));
+    t.viewEl.appendChild(d);
+    syncOmnibox(); renderTabs(); updateNavState(); persistTabs();
+  }
+
+  const ERR_MSGS = {
+    ERR_NAME_NOT_RESOLVED: 'Check if there is a typo in the address.',
+    ERR_CONNECTION_TIMED_OUT: 'The site took too long to respond.',
+    ERR_CONNECTION_REFUSED: 'The site refused the connection.',
+    ERR_CONNECTION_RESET: 'The connection was reset.',
+    ERR_TOO_MANY_REDIRECTS: 'The site redirected too many times.',
+    ERR_SSL_PROTOCOL_ERROR: 'There was a secure-connection problem.',
+    ERR_BLOCKED_BY_CLIENT: 'Blocked by the proxy filter.',
+    ERR_WORKER_UNREACHABLE: 'Your Superwork worker could not be reached. Check the URL in Settings and that the worker is deployed.',
+    ERR_DIRECT_NAV_BLOCKED: 'The page tried to open directly instead of through the proxy, which your network blocks.'
+  };
+  function buildErrorPage(t, info) {
+    const wrap = el('div', 'err-wrap');
+    wrap.appendChild(el('div', 'err-face', ':('));
+    wrap.appendChild(el('h1', 'err-h', 'This site can\u2019t be reached'));
+    wrap.appendChild(el('p', 'err-p', info.host
+      ? 'The page at ' + info.host + ' could not be loaded through Superwork.'
+      : 'The page could not be loaded through Superwork.'));
+    const msg = ERR_MSGS[info.code] || '';
+    if (msg) wrap.appendChild(el('p', 'err-p', msg));
+    if (info.detail) wrap.appendChild(el('p', 'err-p err-detail', info.detail));
+    wrap.appendChild(el('div', 'err-code', info.code || 'ERR_FAILED'));
+    const btns = el('div', 'err-btns');
+    const reload = el('button', 'btn-primary', 'Reload');
+    reload.addEventListener('click', () => {
+      if (t.kind === 'web' && t.url) { startProgress(t.id); loadTab(t, { url: t.url }); }
+    });
+    btns.appendChild(reload);
+    wrap.appendChild(btns);
+    return wrap;
+  }
+
+  function goHistory(t, dir) {
+    if (!t || !t.hist || !t.hist.length) return;
+    const ni = (t.hidx == null ? 0 : t.hidx) + dir;
+    if (ni < 0 || ni >= t.hist.length) return;
+    t.hidx = ni;
+    const entry = t.hist[ni];
+    if (!entry.url) {
+      /* back to an internal page (New Tab / Settings / …) */
+      if (t.iframe) { try { t.iframe.remove(); } catch (e) { } t.iframe = null; }
+      t.viewEl.innerHTML = '';
+      t.kind = 'internal';
+      t.internal = entry.internal || 'newtab';
+      t.url = null;
+      t.title = entry.internal
+        ? (entry.internal.charAt(0).toUpperCase() + entry.internal.slice(1))
+        : 'New Tab';
+      t.favicon = null;
+      t.hookCanBack = false; t.hookCanFwd = false;
+      populateTab(t);
+      syncOmnibox(); renderTabs(); updateNavState(); persistTabs();
+      return;
+    }
+    loadTab(t, { url: entry.url, push: false });
+  }
+
+  function activateTab(id) {
+    const t = tabs.find(x => x.id === id);
+    if (!t) return;
+    activeId = id;
+    if (t.lazyUrl && !t.iframe) {
+      const u = t.lazyUrl; t.lazyUrl = null; t.url = u; t.kind = 'web';
+      populateTab(t);
+    }
+    tabs.forEach(x => x.viewEl.classList.toggle('active', x.id === id));
+    renderTabs();
+    syncOmnibox();
+    updateNavState();
+    persistTabs();
+  }
+
+  function closeTab(id) {
+    const idx = tabs.findIndex(t => t.id === id);
+    if (idx < 0) return;
+    const t = tabs[idx];
+    killTabWorkers(t);
+    closedStack.push({ url: t.url, internal: t.internal, kind: t.kind, title: t.title });
+    if (closedStack.length > 25) closedStack.shift();
+    t.viewEl.remove();
+    tabs.splice(idx, 1);
+    if (!tabs.length) { newTab(newTabPage()); return; }
+    if (activeId === id) activateTab(tabs[Math.min(idx, tabs.length - 1)].id);
+    else { renderTabs(); persistTabs(); }
+  }
+
+  /* ============================================================
+     v8: Worker bridge — the sandboxed page cannot construct ANY
+     Worker (opaque origin). Its hook sends makeWorker and talks to
+     a fake worker; HERE we build a REAL one in the app context from
+     a data: URL (works from file:// for classic AND module types)
+     and bridge messages both ways.
+       • script fetched through /service/ with x-sw-worker:1 → the
+         worker prepends its runtime shim (proxied fetch/XHR/
+         importScripts) and rewrites import.meta.url;
+       • module workers: every static/dynamic import specifier is
+         re-fetched and inlined as a nested data: URL (imports from
+         data: workers only resolve for data:/https targets);
+       • classic workers: literal importScripts(...) URLs are
+         pre-fetched into self.__SWPRE and served synchronously by
+         the shim;
+       • self-host targets (a URL on the worker origin itself) are
+         fetched directly — /service/ refuses to loop through itself.
+     ============================================================ */
+  const workerBridges = new Map(); /* id → {worker, tabId} */
+
+  function killTabWorkers(t) {
+    for (const [id, b] of Array.from(workerBridges)) {
+      if (b.tabId === t.id) {
+        b.dead = true;
+        b.queue = [];
+        if (b.worker) { try { b.worker.terminate(); } catch (e) { } }
+        workerBridges.delete(id);
+      }
+    }
+  }
+
+  function stdB64(str) {
+    /* UTF-8-safe standard base64 for data: URLs */
+    try { return btoa(unescape(encodeURIComponent(str))); }
+    catch (e) {
+      const bytes = new TextEncoder().encode(str);
+      let bin = '';
+      for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      return btoa(bin);
+    }
+  }
+
+  function svcOf(realUrl) { return svc('/service/' + b64e(realUrl)); }
+
+  function decodeSvcUrl(u) {
+    try {
+      const p = new URL(u, WORKER || location.href);
+      if (p.pathname.indexOf('/service/') === 0) {
+        const seg = p.pathname.slice('/service/'.length).split('/')[0];
+        const d = b64d(seg);
+        if (/^https?:\/\//i.test(d)) return d;
+      }
+    } catch (e) { }
+    return null;
+  }
+
+  function isSelfHost(u) {
+    try {
+      if (!WORKER) return false;
+      return new URL(u).host === new URL(WORKER).host;
+    } catch (e) { return false; }
+  }
+
+  async function fetchWorkerScript(realUrl) {
+    /* returns the shimmed+rewritten source text */
+    if (isSelfHost(realUrl)) {
+      const r = await fetch(realUrl, { cache: 'no-store' });
+      if (!r.ok) throw new Error('worker script HTTP ' + r.status);
+      const src = await r.text();
+      return 'var __SWCFG=' + JSON.stringify({ url: realUrl, worker: WORKER || '' }) + ';\n' + src;
+    }
+    const r = await fetch(svcOf(realUrl), { headers: { 'x-sw-worker': '1' }, cache: 'no-store' });
+    if (!r.ok) throw new Error('worker script HTTP ' + r.status);
+    return await r.text();
+  }
+
+  async function buildModuleDataUrl(realUrl, depth, seen) {
+    if (depth > 6) throw new Error('module chain too deep');
+    if (seen.has(realUrl)) return seen.get(realUrl);
+    let src = await fetchWorkerScript(realUrl);
+    seen.set(realUrl, 'data:text/javascript,'); /* cycle guard */
+    /* specifiers are already ABSOLUTE service URLs after the worker's
+       rewrite; map each to a nested data: URL */
+    const re = /(\bfrom\s*|\bimport\s*\(\s*|\bimport\s*)(['"])([^'"]+)\2/g;
+    const matches = [];
+    let m;
+    while ((m = re.exec(src))) {
+      const spec = m[3];
+      if (!/^(https?:\/\/|\.\/|\/)/.test(spec)) continue;
+      matches.push({ whole: m[0], pre: m[1], spec });
+    }
+    const targets = new Map(); /* spec → realUrl */
+    for (const mm of matches) {
+      let real = decodeSvcUrl(mm.spec);
+      if (!real) {
+        try {
+          const abs = new URL(mm.spec, realUrl).href;
+          if (/^https?:\/\//i.test(abs)) real = abs;
+        } catch (e) { }
+      }
+      if (real && !isSelfHost(real) && real !== realUrl) targets.set(mm.spec, real);
+    }
+    const specs = [...targets.keys()];
+    const dataUrls = new Map();
+    await Promise.all(specs.map(async (sp) => {
+      try {
+        const du = await buildModuleDataUrl(targets.get(sp), depth + 1, seen);
+        dataUrls.set(sp, du);
+      } catch (e) { /* leave the specifier untouched */ }
+    }));
+    for (const mm of matches) {
+      const du = dataUrls.get(mm.spec);
+      if (du) src = src.split(mm.whole).join(mm.pre + '"' + du + '"');
+    }
+    const out = 'data:text/javascript;base64,' + stdB64(src);
+    seen.set(realUrl, out);
+    return out;
+  }
+
+  async function buildClassicSource(realUrl) {
+    let src = await fetchWorkerScript(realUrl);
+    /* pre-fetch literal importScripts(...) chains into __SWPRE.
+       The shim resolves each argument against __SWCFG.url and looks
+       the SERVICE form up in the map — sync fidelity for the
+       standard top-of-worker pattern. */
+    const pre = {};
+    const seen = new Set([realUrl]);
+    const queue = [realUrl];
+    while (queue.length && Object.keys(pre).length < 24) {
+      const base = queue.shift();
+      let text;
+      if (base === realUrl) text = src;
+      else {
+        try { text = await fetchWorkerScript(base); } catch (e) { continue; }
+      }
+      const re = /importScripts\s*\(\s*((?:['"][^'"]*['"]\s*,?\s*)+)\)/g;
+      let m;
+      while ((m = re.exec(text))) {
+        const args = m[1].match(/['"]([^'"]+)['"]/g) || [];
+        for (const a of args) {
+          const spec = a.slice(1, -1);
+          try {
+            const abs = new URL(spec, base).href;
+            if (!/^https?:\/\//i.test(abs) || seen.has(abs)) continue;
+            seen.add(abs);
+            const childText = await fetchWorkerScript(abs);
+            pre[svcOf(abs)] = childText;
+            queue.push(abs); /* nested importScripts */
+          } catch (e) { }
+        }
+      }
+    }
+    if (Object.keys(pre).length) {
+      src = 'self.__SWPRE=' + JSON.stringify(pre) + ';\n' + src;
+    }
+    return 'data:text/javascript;base64,' + stdB64(src);
+  }
+
+  /* v8.1: blob: URLs created inside the sandboxed page are unfetchable
+     from the bridged worker (context-scoped). The worker's shim asks for
+     the bytes; we relay the request to the page's hook (which keeps a
+     registry of every createObjectURL payload) and route the reply back. */
+  const blobReqs = new Map(); /* reqId → worker */
+
+  function workerEvt(t, id, kind, data) {
+    try {
+      if (t && t.iframe && t.iframe.contentWindow) {
+        t.iframe.contentWindow.postMessage({ __swwork: 1, id, kind, data }, '*');
+      }
+    } catch (e) { }
+  }
+
+  function makeWorkerFor(t, d) {
+    const { id, url, module } = d;
+    /* the bridge entry exists IMMEDIATELY with a pending queue — the
+       page posts messages the instant `new Worker` returns, but the
+       real worker takes hundreds of ms to build (script fetch + import
+       inlining). Real browsers queue messages until the worker boots;
+       the bridge must too, or every early postMessage is lost. */
+    const wb = { worker: null, tabId: t.id, queue: [], dead: false };
+    workerBridges.set(id, wb);
+    (async () => {
+      let realUrl = decodeSvcUrl(url) || (/^https?:\/\//i.test(url) ? url : null);
+      if (!realUrl) throw new Error('invalid worker URL');
+      const dataUrl = module
+        ? await buildModuleDataUrl(realUrl, 0, new Map())
+        : await buildClassicSource(realUrl);
+      const w = new Worker(dataUrl, module ? { type: 'module' } : undefined);
+      if (wb.dead) { try { w.terminate(); } catch (eD) { } return; }
+      wb.worker = w;
+      w.onmessage = (e) => {
+        const md = e.data;
+        if (md && typeof md === 'object' && md.__swblobget === 1 && md.req) {
+          /* blob bytes request from the shim — forward to the page's hook */
+          blobReqs.set(md.req, w);
+          try {
+            if (t && t.iframe && t.iframe.contentWindow) {
+              t.iframe.contentWindow.postMessage({ __swblobget: 1, url: md.url, req: md.req }, '*');
+            }
+          } catch (eB) { }
+          return;
+        }
+        workerEvt(t, id, 'message', e.data);
+      };
+      w.onmessageerror = () => workerEvt(t, id, 'messageerror', null);
+      w.onerror = (e) => { workerEvt(t, id, 'error', {
+        message: e.message || 'Worker error', filename: e.filename || '', lineno: e.lineno || 0
+      }); };
+      /* flush everything the page sent while the worker was building */
+      for (const q of wb.queue) {
+        try { w.postMessage(q); } catch (eQ) { }
+      }
+      wb.queue = [];
+    })().catch((err) => {
+      workerBridges.delete(id);
+      workerEvt(t, id, 'error', { message: String((err && err.message) || err).slice(0, 200) });
+    });
+  }
+
+  function navigate(input, opts) {
+    const t = tab();
+    if (!t) return;
+    opts = opts || {};
+    const dest = resolveInput(input);
+    if (!dest) return;
+
+    if (dest.internal) {
+      /* internal pseudo-URL: superwork://settings etc. — recorded
+         as a history entry so the back button returns to whatever
+         was on screen before */
+      t.hist = (t.hist || []).slice(0, (t.hidx == null ? -1 : t.hidx) + 1);
+      t.hist.push({ internal: dest.internal, title: dest.internal });
+      t.hidx = t.hist.length - 1;
+      t.kind = 'internal'; t.internal = dest.internal; t.url = null;
+      t.iframe = null; t.viewEl.innerHTML = '';
+      populateTab(t);
+      syncOmnibox(); renderTabs(); updateNavState(); persistTabs();
+      return;
+    }
+
+    if (opts.newTab) { newTab({ url: dest.url }); return; }
+
+    loadTab(t, { url: dest.url, push: true });
+  }
+
+  /* what "New Tab" means — the built-in search bar, or (setting)
+     the selected search engine's own website, loaded through the
+     proxy like any other page */
+  function newTabPage() {
+    if ((settings().openWith || 'newtab') === 'engine') {
+      const eng = currentEngine();
+      const home = eng.home || (eng.url || '').split('?')[0];
+      if (home && /^https?:\/\//i.test(home)) return { url: home };
+    }
+    return {};
+  }
+
+  /* ---------------- omnibox input resolution ---------------- */
+  function isUrlLike(s) {
+    s = (s || '').trim();
+    if (!s) return false;
+    if (/^(https?|superwork):/i.test(s)) return true;
+    if (s.startsWith('localhost') || s.startsWith('localhost:')) return true;
+    const firstSeg = s.split('/')[0].split('?')[0].split('#')[0];
+    if (/^\d{1,3}(\.\d{1,3}){3}(:\d+)?$/.test(firstSeg)) return true;
+    if (/\s/.test(s) || !s.includes('.')) return false;
+    return /^[a-z0-9-]+(\.[a-z0-9-]+)+(:\d+)?$/i.test(firstSeg);
+  }
+  function resolveInput(input) {
+    const s = (input || '').trim();
+    if (!s) return null;
+    const internal = /^superwork:\/\/([a-z]+)/i.exec(s);
+    if (internal) {
+      const page = internal[1].toLowerCase();
+      if (['newtab', 'settings', 'history', 'bookmarks'].includes(page)) return { internal: page };
+    }
+    let url;
+    if (isUrlLike(s)) {
+      url = /^https?:/i.test(s) ? s : (/^[a-z]+:\/\//i.test(s) ? s : 'https://' + s);
+      try { return { url: new URL(url).href }; } catch (e) { return null; }
+    }
+    const eng = currentEngine();
+    /* v6: the omnibox ALWAYS opens the results page — the
+       "frontpage vs results" setting now controls what loads when
+       the app opens / a new tab is created (see newTabPage) */
+    return { url: eng.url.replace('%s', encodeURIComponent(s)) };
+  }
+
+  /* ============================================================
+     Rendering: tab strip
+     ============================================================ */
+  function renderTabs() {
+    const wrap = $('#tabs');
+    wrap.innerHTML = '';
+    tabs.forEach(t => {
+      const b = el('button', 'tab' + (t.id === activeId ? ' active' : ''));
+      b.type = 'button';
+      b.title = t.title || t.url || 'New Tab';
+      const ico = el('span', 't-ico');
+      if (t.kind === 'web') {
+        const img = document.createElement('img');
+        img.alt = '';
+        img.src = t.favicon || faviconFor(t.url);
+        img.loading = 'lazy';
+        img.onerror = () => { img.src = ICON; };
+        ico.appendChild(img);
+      } else {
+        ico.appendChild(svgIcon(t.internal === 'settings' ? ICONS.settings :
+          t.internal === 'history' ? ICONS.history :
+            t.internal === 'bookmarks' ? ICONS.bookmark : ICONS.globe, 14));
+      }
+      const title = el('span', 't-title');
+      title.textContent = t.title || (t.kind === 'web' ? t.url : 'New Tab');
+      const x = el('span', 't-close');
+      x.appendChild(svgIcon(ICONS.close));
+      x.title = 'Close tab';
+      b.append(ico, title, x);
+      b.addEventListener('click', (e) => {
+        if (x.contains(e.target) || e.target === x) return;
+        activateTab(t.id);
+      });
+      x.addEventListener('click', (e) => { e.stopPropagation(); closeTab(t.id); });
+      b.addEventListener('auxclick', (e) => { if (e.button === 1) closeTab(t.id); });
+      wrap.appendChild(b);
+    });
+    $('#tg-count').textContent = tabs.length + (tabs.length === 1 ? ' tab' : ' tabs');
+    updateTabsBadge();
+  }
+
+  /* ============================================================
+     Omnibox
+     ============================================================ */
+  const omni = $('#omnibox-input');
+  let omniState = { open: false, items: [], sel: -1, ctrl: null };
+
+  function displayUrlFor(t) {
+    if (!t) return '';
+    if (t.kind === 'internal') {
+      return 'superwork://' + (t.internal || 'newtab');
+    }
+    return t.url || '';
+  }
+  function syncOmnibox() {
+    const t = tab();
+    const box = $('#omnibox');
+    if (document.activeElement === omni) return;
+    omni.value = displayUrlFor(t);
+    omni.placeholder = 'Search ' + currentEngine().name + ' or type URL';
+    const isWeb = t && t.kind === 'web';
+    box.classList.toggle('secure', !!(isWeb && /^https:/i.test(t.url || '')));
+    box.classList.toggle('search', !isWeb);
+    updateStar();
+  }
+  function updateStar() {
+    const t = tab();
+    const starred = !!(t && t.url && loadJSON(LS.bookmarks, []).some(b => b.url === t.url));
+    $('#omni-star').classList.toggle('starred', starred);
+  }
+
+  /* ----- suggestions ----- */
+  async function fetchSuggest(q) {
+    const eng = currentEngine();
+    if (!eng.suggest || !q) return [];
+    const url = eng.suggest.replace('%s', encodeURIComponent(q));
+    try {
+      const res = await fetch(svc(encUrl(url)));
+      if (!res.ok) return [];
+      const ct = (res.headers.get('content-type') || '').toLowerCase();
+      if (ct.indexOf('json') < 0 && ct.indexOf('javascript') < 0 && ct.indexOf('text') !== 0) return [];
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); } catch (e) { return []; }
+      let out = [];
+      if (Array.isArray(data)) {
+        const arr = Array.isArray(data[1]) ? data[1] : [];
+        out = arr.map(x => typeof x === 'string' ? x :
+          (x && (x.phrase || x.suggestion || (typeof x === 'object' && x.k))) || '');
+      } else if (data && Array.isArray(data.suggestions)) {
+        out = data.suggestions.map(x => typeof x === 'string' ? x : (x && x.phrase) || '');
+      } else if (data && Array.isArray(data.r)) {
+        out = data.r.map(x => x && x.k).filter(Boolean);
+      }
+      return out.filter(s => typeof s === 'string' && s && s.length < 90).slice(0, 5);
+    } catch (e) { return []; }
+  }
+
+  function historyMatches(q) {
+    const hist = loadJSON(LS.history, []);
+    const ql = q.toLowerCase();
+    const seen = new Set();
+    const out = [];
+    for (let i = hist.length - 1; i >= 0 && out.length < 3; i--) {
+      const h = hist[i];
+      if (!h.url || !h.url.startsWith('http')) continue;
+      if (ql && (h.url.toLowerCase().includes(ql) || (h.title || '').toLowerCase().includes(ql))) {
+        if (seen.has(h.url)) continue;
+        seen.add(h.url);
+        out.push({ url: h.url, title: h.title || h.url });
+      }
+    }
+    return out;
+  }
+
+  function buildSuggestItems(q) {
+    const items = [];
+    const eng = currentEngine();
+    if (isUrlLike(q) || /^https?:\/\//i.test(q)) {
+      items.push({ kind: 'url', text: q, run: () => navigate(q) });
+    } else if (q) {
+      items.push({ kind: 'search', text: q, engine: eng.name, run: () => navigate(q) });
+    }
+    historyMatches(q).forEach(h => items.push({ kind: 'history', text: h.title, url: h.url, run: () => navigate(h.url) }));
+    return items;
+  }
+
+  function renderSuggest(dynamic) {
+    const box = $('#suggest');
+    const q = omni.value.trim();
+    const items = omniState.items;
+    if (!q || (!items.length && !omniState.pending)) { box.hidden = true; omniState.open = false; return; }
+    box.innerHTML = '';
+    items.forEach((it, i) => {
+      const row = el('button', 'sg' + (i === omniState.sel ? ' sel' : ''));
+      row.type = 'button';
+      const ico = el('span', 'sg-ico');
+      if (it.kind === 'search') {
+        const img = document.createElement('img');
+        img.src = ICON; img.alt = '';
+        ico.appendChild(img);
+      } else {
+        ico.appendChild(svgIcon(it.kind === 'url' ? ICONS.globe : ICONS.history, 16));
+      }
+      const text = el('span', 'sg-text');
+      const bold = omni.value.trim();
+      let label = it.text;
+      if (it.kind === 'search' && it.suggestText) label = it.suggestText;
+      text.innerHTML = '';
+      const tnode = document.createElement('span');
+      tnode.textContent = label;
+      text.appendChild(tnode);
+      const kind = el('span', 'sg-kind');
+      kind.textContent = it.kind === 'search' ? (it.engine ? 'Search ' + it.engine : 'Search') :
+        it.kind === 'url' ? 'Visit' : (it.url || '').replace(/^https?:\/\//, '').split('/')[0];
+      row.append(ico, text, kind);
+      row.addEventListener('click', () => { omniState.sel = i; commitSuggest(); });
+      box.appendChild(row);
+    });
+    if (omniState.pending) {
+      const p = el('div', 'sg');
+      p.style.opacity = '.5';
+      p.textContent = '…';
+      box.appendChild(p);
+    }
+    box.hidden = false;
+    omniState.open = true;
+  }
+
+  function commitSuggest() {
+    const it = omniState.items[omniState.sel];
+    omni.blur();
+    closeSuggest();
+    if (it) it.run(); else navigate(omni.value);
+  }
+  function closeSuggest() {
+    $('#suggest').hidden = true;
+    omniState.open = false;
+    omniState.sel = -1;
+    if (omniState.ctrl) { try { omniState.ctrl.abort(); } catch (e) { } omniState.ctrl = null; }
+  }
+
+  let suggestTimer = null;
+  omni.addEventListener('input', () => {
+    $('#omni-clear').hidden = !omni.value;
+    clearTimeout(suggestTimer);
+    const q = omni.value.trim();
+    omniState.items = buildSuggestItems(q);
+    omniState.sel = omniState.items.length ? 0 : -1;
+    renderSuggest();
+    if (!q) return;
+    suggestTimer = setTimeout(async () => {
+      const eng = currentEngine();
+      if (!eng.suggest) return;
+      omniState.pending = true;
+      renderSuggest();
+      const ctrl = new AbortController();
+      omniState.ctrl = ctrl;
+      const sug = await fetchSuggest(q);
+      omniState.pending = false;
+      if (ctrl.signal.aborted || omni.value.trim() !== q || document.activeElement !== omni) return;
+      /* merge engine suggestions below the primary search row */
+      const base = buildSuggestItems(q);
+      const existing = new Set(base.map(b => b.text));
+      sug.forEach(s => {
+        if (!existing.has(s)) base.splice(base.length > 0 ? 1 : 0, 0, { kind: 'search', text: s, suggestText: s, engine: eng.name, run: () => navigate(s) });
+      });
+      omniState.items = base.slice(0, 8);
+      omniState.sel = omniState.items.length ? 0 : -1;
+      renderSuggest();
+    }, 130);
+  });
+  omni.addEventListener('focus', () => {
+    $('#omnibox').classList.add('focused');
+    omni.select();
+    const q = omni.value.trim();
+    omniState.items = buildSuggestItems(q || '');
+    omniState.sel = 0;
+    renderSuggest();
+  });
+  omni.addEventListener('blur', () => {
+    setTimeout(() => {
+      $('#omnibox').classList.remove('focused');
+      closeSuggest();
+      syncOmnibox();
+    }, 140);
+  });
+  omni.addEventListener('keydown', (e) => {
+    const n = omniState.items.length;
+    if (e.key === 'ArrowDown' && n) {
+      e.preventDefault();
+      omniState.sel = (omniState.sel + 1) % n;
+      renderSuggest();
+    } else if (e.key === 'ArrowUp' && n) {
+      e.preventDefault();
+      omniState.sel = (omniState.sel <= 0 ? n - 1 : omniState.sel - 1);
+      renderSuggest();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      commitSuggest();
+    } else if (e.key === 'Escape') {
+      omni.blur();
+      closeSuggest();
+    }
+  });
+  $('#omni-clear').addEventListener('click', () => { omni.value = ''; omni.focus(); $('#omni-clear').hidden = true; });
+  $('#omni-star').addEventListener('click', toggleBookmark);
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#omnibox')) closeSuggest();
+    if (!e.target.closest('#menu') && !e.target.closest('#btn-menu')) hideMenu();
+  });
+
+  /* ============================================================
+     Bookmarks / history
+     ============================================================ */
+  function toggleBookmark() {
+    const t = tab();
+    if (!t || t.kind !== 'web' || !t.url) return;
+    let bms = loadJSON(LS.bookmarks, []);
+    const i = bms.findIndex(b => b.url === t.url);
+    if (i >= 0) { bms.splice(i, 1); toast('Bookmark removed'); }
+    else { bms.push({ url: t.url, title: t.title || t.url, favicon: t.favicon, ts: Date.now() }); toast('Bookmark added'); }
+    saveJSON(LS.bookmarks, bms);
+    updateStar();
+  }
+
+  let lastNav = { url: '', ts: 0 };
+  function recordHistory(t) {
+    if (!t || !t.url || !t.url.startsWith('http')) return;
+    const now = Date.now();
+    if (t.url === lastNav.url && now - lastNav.ts < 8000) { lastNav.ts = now; return; }
+    lastNav = { url: t.url, ts: now };
+    let hist = loadJSON(LS.history, []);
+    if (hist.length && hist[hist.length - 1].url === t.url) { hist[hist.length - 1].ts = now; }
+    else {
+      hist.push({ url: t.url, title: t.title || t.url, favicon: t.favicon, ts: now });
+      if (hist.length > 2000) hist = hist.slice(-2000);
+    }
+    saveJSON(LS.history, hist);
+  }
+
+  /* ============================================================
+     Progress + navigation state
+     ============================================================ */
+  const progressTimers = {};
+  function startProgress(id) {
+    const bar = $('#progressbar');
+    bar.classList.remove('done'); bar.classList.add('loading');
+    bar.querySelector('i').style.width = '12%';
+    clearTimeout(progressTimers[id]);
+    progressTimers[id] = setTimeout(() => { bar.querySelector('i').style.width = '68%'; }, 400);
+  }
+  function stopProgress(id) {
+    clearTimeout(progressTimers[id]);
+    const bar = $('#progressbar');
+    const i = bar.querySelector('i');
+    i.style.width = '100%';
+    setTimeout(() => { bar.classList.remove('loading'); bar.classList.add('done'); }, 220);
+  }
+
+  function updateNavState() {
+    const t = tab();
+    const web = !!(t && t.kind === 'web' && t.url);
+    $('#btn-reload').disabled = !web;
+    $('#btn-home').hidden = !settings().showHome;
+    renderTabs();
+  }
+
+  /* back/forward inside the iframe's own session history — via the
+     hook command channel (works cross-origin; direct access throws) */
+  function frameWin(t) {
+    try { return t && t.iframe && t.iframe.contentWindow; } catch (e) { return null; }
+  }
+  function frameCmd(t, msg) {
+    const w = frameWin(t);
+    if (!w) return;
+    try { w.postMessage(Object.assign({ __swcmd: 1 }, msg), '*'); } catch (e) { }
+  }
+  /* back/forward: first ask the in-page hook (SPA history lives
+     there); if it is already at a page-load boundary it replies
+     histBack/histFwd and the app walks its own per-tab stack.
+     A short fallback timer covers hooks that cannot answer. */
+  function navCmd(t, cmd, dir) {
+    if (!t || t.kind !== 'web') return;
+    if (!t.iframe) { goHistory(t, dir); return; }   /* error pages etc. */
+    startProgress(t.id);
+    frameCmd(t, { cmd: cmd });
+    clearTimeout(t._navT);
+    t._navReplied = false;
+    t._navT = setTimeout(() => {
+      if (!t._navReplied) { t._navReplied = true; goHistory(t, dir); }
+    }, 350);
+  }
+  /* ============================================================
+     Phone back button (v6) — the on-screen back/forward buttons
+     are gone; the system/browser back gesture drives the app
+     instead. A guard entry is kept at the tip of the joint
+     history, so every popstate is one back press. Each press is
+     consumed by, in order: the tab grid, the menu, the find bar,
+     open suggestions, dialogs, then the active tab's history
+     (in-page SPA states first, then page loads, then internal
+     pages). When nothing can consume it, the app offers "press
+     back again to exit".
+     (The page iframes are re-created on every load, so the
+     browser's per-iframe history entries are always dead and get
+     skipped in the same traversal — the guard stays the tip.)
+     ============================================================ */
+  let guardArmed = false;
+  let guardSeq = 0;
+  let rearmTimer = null;
+  function armBackGuard() {
+    clearTimeout(rearmTimer);
+    try {
+      history.pushState({ __swguard: ++guardSeq }, '');
+      guardArmed = true;
+    } catch (e) {
+      /* engines that refuse pushState on this scheme — hash
+         entries still produce a popstate on back */
+      try { location.hash = '#sw' + (++guardSeq); guardArmed = true; }
+      catch (e2) { guardArmed = false; }
+    }
+  }
+  function closeTopOverlay() {
+    const grid = $('#tabgrid');
+    if (grid && !grid.hidden) { grid.hidden = true; return true; }
+    const menu = $('#menu');
+    if (menu && !menu.hidden) { hideMenu(); return true; }
+    const find = $('#findbar');
+    if (find && !find.hidden) { closeFind(); return true; }
+    const dlg = $('#dlg');
+    if (dlg && dlg.open) { try { $('#dlg-cancel').click(); } catch (e) { } return true; }
+    if (omniState && omniState.open) { try { omni.blur(); } catch (e) { } closeSuggest(); return true; }
+    return false;
+  }
+  function consumeBackPress() {
+    if (closeTopOverlay()) return true;
+    const t = tab();
+    if (!t) return false;
+    const stackBack = !!(t.hist && t.hidx != null && t.hidx > 0);
+    if (t.kind !== 'web' || !t.url) {
+      /* internal page — back follows the tab history (returns to
+         whatever was on screen before Settings/History/…) */
+      if (stackBack) { goHistory(t, -1); return true; }
+      return false;
+    }
+    if (t.hookCanBack || stackBack) { navCmd(t, 'back', -1); return true; }
+    return false;
+  }
+  window.addEventListener('popstate', () => {
+    if (!guardArmed) { armBackGuard(); return; }
+    if (consumeBackPress()) {
+      armBackGuard();
+    } else {
+      guardArmed = false;
+      toast('Press back again to exit');
+      clearTimeout(rearmTimer);
+      rearmTimer = setTimeout(armBackGuard, 1800);
+    }
+  });
+
+  $('#btn-reload').addEventListener('click', () => reloadTab());
+  $('#btn-home').addEventListener('click', () => goHome());
+  $('#newtab-btn').addEventListener('click', () => newTab(newTabPage()));
+  $('#btn-tabs').addEventListener('click', () => openTabGrid());
+
+  function reloadTab() {
+    const t = tab();
+    if (!t) return;
+    if (t.kind === 'web' && t.url) {
+      startProgress(t.id);
+      loadTab(t, { url: t.url, push: false });
+    } else {
+      t.viewEl.innerHTML = '';
+      populateTab(t);
+    }
+  }
+  function goHome() {
+    const hp = (settings().homepage || '').trim();
+    if (hp && /^https?:\/\//i.test(hp)) navigate(hp);
+    else navigate('superwork://newtab');
+  }
+
+  /* ============================================================
+     Messages from proxied pages (hook.js) — the only channel the
+     pages have. Every navigation arrives here and is performed by
+     the app's fetch + srcdoc pipeline.
+     ============================================================ */
+  window.addEventListener('message', (e) => {
+    const d = e.data;
+    if (!d || d.__sw !== 1) return;
+    /* map source window → tab */
+    let t = null;
+    for (const x of tabs) {
+      if (x.iframe && x.iframe.contentWindow === e.source) { t = x; break; }
+    }
+    if (!t) return;
+    switch (d.type) {
+      case 'nav': {
+        t._navReplied = true; clearTimeout(t._navT);
+        if (d.phase === 'start') {
+          if (t.awaitHello) {
+            /* the handshake from the srcdoc we injected */
+            t.awaitHello = false;
+            t.escapes = 0;
+          } else if (d.url && /^https?:\/\//i.test(d.url) && d.url !== t.url) {
+            /* a second handshake = the frame escaped into a proxied
+               page by direct navigation — recover it properly */
+            loadTab(t, { url: d.url });
+            return;
+          }
+        }
+        const url = d.url || '';
+        if (/^https?:\/\//i.test(url)) {
+          t.url = url;
+          t.kind = 'web';
+          if (d.title) t.title = d.title;
+          if (d.favicon) t.favicon = d.favicon;
+          t.hookCanBack = !!d.canBack;
+          t.hookCanFwd = !!d.canFwd;
+          if (t.hist && t.hidx != null && t.hist[t.hidx]) {
+            t.hist[t.hidx] = { url: t.url, title: d.title || t.url };
+          }
+          if (d.phase === 'load') { t.loaded = true; stopProgress(t.id); recordHistory(t); }
+        }
+        syncOmnibox(); updateNavState();
+        break;
+      }
+      case 'meta':
+        if (d.title) t.title = d.title;
+        if (d.favicon) t.favicon = d.favicon;
+        renderTabs(); syncOmnibox();
+        break;
+      case 'navigate':
+        if (d.url && /^https?:\/\//i.test(d.url)) loadTab(t, { url: d.url, push: !d.replace });
+        break;
+      case 'submit': {
+        /* form POST — the app performs the fetch with the body
+           (entries arrive as plain arrays: sandboxed frames cannot
+           postMessage FormData/URLSearchParams objects) */
+        const url = d.url;
+        if (!url || !/^https?:\/\//i.test(url)) break;
+        if (d.multipart) {
+          const fd = new FormData();
+          (d.fields || []).forEach(p => { try { fd.append(p[0], p[1]); } catch (e) { } });
+          Promise.all((d.files || []).map(f =>
+            fetch(f.b64).then(r => r.blob()).then(b => { fd.append(f.k, b, f.name || 'file'); })
+          )).catch(() => { }).then(() => {
+            startProgress(t.id);
+            loadTab(t, { url, push: true, method: 'POST', body: fd });
+          });
+        } else {
+          startProgress(t.id);
+          loadTab(t, { url, push: true, method: 'POST', body: new URLSearchParams(d.fields || []) });
+        }
+        break;
+      }
+      case 'openTab':
+        if (d.url && /^https?:\/\//i.test(d.url)) newTab({ url: d.url });
+        break;
+      case 'download':
+        /* download request relayed by the hook (a[download], data:, blob:) */
+        if (d.dataUrl) downloadFromDataUrl(d.dataUrl, d.filename || '');
+        else if (d.url && /^https?:\/\//i.test(d.url)) startDownload(d.url, { filename: d.filename || '' });
+        else if (d.failed) toast('The page\u2019s download could not be read');
+        break;
+      case 'closeRequest':
+        closeTab(t.id);
+        break;
+      case 'reloadRequest':
+        if (t.kind === 'web' && t.url) { startProgress(t.id); loadTab(t, { url: t.url, push: false }); }
+        break;
+      case 'histBack':
+        t._navReplied = true; clearTimeout(t._navT);
+        goHistory(t, -1);
+        break;
+      case 'histFwd':
+        t._navReplied = true; clearTimeout(t._navT);
+        goHistory(t, 1);
+        break;
+      case 'setCookie':
+        /* script-set cookie from a proxied page — persist + push to the worker */
+        if (d.url && d.cookie) { jarAdd(d.url, d.cookie); queueJarSync(); }
+        break;
+      case 'swStore':
+        /* storage write relayed from a sandboxed frame */
+        if (d.tag && d.origin && typeof d.key === 'string') {
+          const base = 'sw:' + d.tag + ':' + d.origin + ':';
+          try {
+            if (d.val == null) localStorage.removeItem(base + d.key);
+            else localStorage.setItem(base + d.key, String(d.val));
+          } catch (err) { }
+          if (d.tag === 'ss') {
+            memSS[d.origin] = memSS[d.origin] || {};
+            if (d.val == null) delete memSS[d.origin][d.key];
+            else memSS[d.origin][d.key] = String(d.val);
+          }
+        }
+        break;
+      case 'swClear':
+        if (d.tag && d.origin) {
+          const base = 'sw:' + d.tag + ':' + d.origin + ':';
+          try {
+            const kill = [];
+            for (let i = 0; i < localStorage.length; i++) {
+              const k = localStorage.key(i);
+              if (k && k.indexOf(base) === 0) kill.push(k);
+            }
+            kill.forEach(k => localStorage.removeItem(k));
+          } catch (err) { }
+          if (d.tag === 'ss') delete memSS[d.origin];
+        }
+        break;
+      case 'findResult':
+        $('#find-count').textContent = (d.cur + 1) + '/' + Math.max(d.total, 0);
+        break;
+      case 'childLoad':
+        /* v7: an adopted child frame finished loading — its joint
+           history entry may sit above the back guard; re-arm so the
+           next back press lands on the guard, not the child entry */
+        armBackGuard();
+        break;
+      /* v8: Worker bridge — the sandboxed page cannot construct
+         workers (opaque origin); we build real data:-URL workers in
+         the app context and bridge messages both ways */
+      case 'makeWorker':
+        if (d.id && d.url) makeWorkerFor(t, d);
+        break;
+      case 'workerMsg': {
+        const wb = workerBridges.get(d.id);
+        if (wb) {
+          if (wb.worker) {
+            try { wb.worker.postMessage(d.data); }
+            catch (e) { }
+          } else if (!wb.dead) {
+            /* worker still building — queue until it boots (browser semantics) */
+            wb.queue.push(d.data);
+          }
+        }
+        break;
+      }
+      case 'workerTerminate': {
+        const wb2 = workerBridges.get(d.id);
+        if (wb2) {
+          wb2.dead = true;
+          if (wb2.worker) { try { wb2.worker.terminate(); } catch (e) { } }
+          wb2.queue = [];
+          workerBridges.delete(d.id);
+        }
+        break;
+      }
+      case '__swblob': {
+        /* v8.1: blob-bytes reply from the page's hook — route to the
+           requesting worker (correlated by req id) */
+        if (d.__swblobgot === 1 && d.req) {
+          const bw = blobReqs.get(d.req);
+          if (bw) {
+            blobReqs.delete(d.req);
+            const payload = { __swblobgot: 1, req: d.req, mime: d.mime, fail: d.fail };
+            if (d.buf instanceof ArrayBuffer) {
+              payload.buf = d.buf;
+              try { bw.postMessage(payload, [d.buf]); } catch (e) { try { bw.postMessage(payload); } catch (e2) { } }
+            } else {
+              try { bw.postMessage(payload); } catch (e) { }
+            }
+          }
+        }
+        break;
+      }
+      case 'pageLog':
+        /* v8: console.warn relay from pages — surfaced for debugging */
+        try { console.log('[superwork:page]', d.msg || ''); } catch (e) { }
+        break;
+      case 'pageError':
+        /* surfaced for debugging — console keeps a trace per tab */
+        try {
+          console.warn('[superwork:page]', d.msg, d.src ? (d.src + ':' + d.line) : '', d.ctx || '');
+          if (d.stack) console.warn('[superwork:page:stack]', d.stack);
+        } catch (e) { }
+        break;
+    }
+  });
+
+  /* ============================================================
+     Menu
+     ============================================================ */
+  function hideMenu() { $('#menu').hidden = true; }
+  /* v7: zoom controls inside the 3-dots menu */
+  function buildZoomRow() {
+    const row = el('div', 'mzoom');
+    row.appendChild(el('span', 'mzoom-lab', 'Zoom'));
+    const ctl = el('div', 'mzoom-ctl');
+    const minus = el('button', 'mzoom-btn', '\u2212');
+    minus.type = 'button'; minus.title = 'Zoom out';
+    const val = el('span', 'mzoom-val', Math.round(getZoom() * 100) + '%');
+    const plus = el('button', 'mzoom-btn', '+');
+    plus.type = 'button'; plus.title = 'Zoom in';
+    ctl.append(minus, val, plus);
+    const reset = el('button', 'mzoom-reset', 'Reset');
+    reset.type = 'button';
+    row.append(ctl, reset);
+    const upd = () => { val.textContent = Math.round(getZoom() * 100) + '%'; };
+    minus.addEventListener('click', (e) => { e.stopPropagation(); setZoom(getZoom() - 0.1); upd(); });
+    plus.addEventListener('click', (e) => { e.stopPropagation(); setZoom(getZoom() + 0.1); upd(); });
+    reset.addEventListener('click', (e) => { e.stopPropagation(); setZoom(1); upd(); });
+    return row;
+  }
+  function showMenu() {
+    const t = tab();
+    const m = $('#menu');
+    const isWeb = t && t.kind === 'web';
+    const desktop = isWeb && isDesktopHost(t.url);
+    const items = [
+      { icon: ICONS.tab, label: 'New tab', run: () => newTab(newTabPage()) },
+      { icon: ICONS.history, label: 'History', run: () => navigate('superwork://history') },
+      { icon: ICONS.bookmark, label: 'Bookmarks', run: () => navigate('superwork://bookmarks') },
+      { sep: true },
+      { icon: ICONS.find, label: 'Find in page', run: () => openFind(), hide: !isWeb },
+      { icon: ICONS.desktop, label: 'Desktop site', check: desktop, run: () => toggleDesktop(t), hide: !isWeb },
+      { node: buildZoomRow(), hide: !isWeb },
+      ...(navigator.share ? [{ icon: ICONS.share, label: 'Share…', run: () => sharePage(t), hide: !isWeb }] : []),
+      { sep: true },
+      { icon: ICONS.settings, label: 'Settings', run: () => navigate('superwork://settings') },
+      { icon: ICONS.close, label: 'Close tab', run: () => closeTab(activeId) },
+    ].filter(x => !x.hide);
+
+    m.innerHTML = '';
+    items.forEach(it => {
+      if (it.sep) { m.appendChild(el('div', 'msep')); return; }
+      if (it.node) { m.appendChild(it.node); return; }
+      const b = el('button', 'mi' + (it.check ? ' on' : ''));
+      b.type = 'button';
+      b.appendChild(svgIcon(it.icon, 18));
+      const lab = el('span', '', it.label);
+      b.appendChild(lab);
+      if (it.check) b.appendChild(svgIcon(ICONS.check, 16)).classList.add('mi-check');
+      b.addEventListener('click', () => { hideMenu(); it.run(); });
+      m.appendChild(b);
+    });
+    m.hidden = false;
+  }
+  $('#btn-menu').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if ($('#menu').hidden) showMenu(); else hideMenu();
+  });
+
+  function isDesktopHost(url) {
+    try {
+      const host = new URL(url).hostname;
+      return desktopHosts().includes(host);
+    } catch (e) { return false; }
+  }
+  function toggleDesktop(t) {
+    if (!t || !t.url) return;
+    let host = '';
+    try { host = new URL(t.url).hostname; } catch (e) { return; }
+    const list = desktopHosts().filter(Boolean);
+    const i = list.indexOf(host);
+    if (i >= 0) list.splice(i, 1); else list.push(host);
+    try { localStorage.setItem(LS_DSK, JSON.stringify(list)); } catch (e) { }
+    syncJar(); /* push the new UA list to the worker */
+    toast(i >= 0 ? 'Desktop site off for ' + host : 'Desktop site on for ' + host);
+    reloadTab();
+  }
+
+  async function sharePage(t) {
+    try {
+      await navigator.share({ title: t.title || '', url: t.url });
+    } catch (e) { }
+  }
+
+  /* ============================================================
+     Find in page — executed inside the page by hook.js, so it works
+     in both engine modes (the UI never needs DOM access to the
+     proxied document, which is impossible cross-origin).
+     ============================================================ */
+  function openFind() {
+    $('#findbar').hidden = false;
+    $('#find-input').value = '';
+    $('#find-count').textContent = '0/0';
+    $('#find-input').focus();
+  }
+  function closeFind() {
+    $('#findbar').hidden = true;
+    frameCmd(tab(), { cmd: 'findClear' });
+  }
+  function runFind(q, dir) {
+    const t = tab();
+    if (!t || !t.iframe) return;
+    frameCmd(t, { cmd: 'find', q: String(q || '') });
+    /* direction is applied after the result arrives via findResult */
+    if (dir < 0) pendingFindDir = -1;
+  }
+  let pendingFindDir = 1;
+  let findTimer = null;
+  $('#find-input').addEventListener('input', () => {
+    clearTimeout(findTimer);
+    findTimer = setTimeout(() => runFind($('#find-input').value, 1), 220);
+  });
+  $('#find-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      frameCmd(tab(), { cmd: e.shiftKey ? 'findPrev' : 'findNext' });
+    }
+    if (e.key === 'Escape') closeFind();
+  });
+  $('#find-next').addEventListener('click', () => frameCmd(tab(), { cmd: 'findNext' }));
+  $('#find-prev').addEventListener('click', () => frameCmd(tab(), { cmd: 'findPrev' }));
+  $('#find-close').addEventListener('click', closeFind);
+
+  /* ============================================================
+     Internal pages
+     ============================================================ */
+  const DEFAULT_LINKS = [
+    { t: 'DuckDuckGo', u: 'https://duckduckgo.com/' },
+    { t: 'Brave', u: 'https://search.brave.com/' },
+    { t: 'Bing', u: 'https://www.bing.com/' },
+    { t: 'Google', u: 'https://www.google.com/' },
+    { t: 'Wikipedia', u: 'https://en.wikipedia.org/' },
+    { t: 'YouTube', u: 'https://www.youtube.com/' },
+    { t: 'GitHub', u: 'https://github.com/' },
+    { t: 'Reddit', u: 'https://www.reddit.com/' },
+    { t: 'Amazon', u: 'https://www.amazon.com/' },
+    { t: 'X', u: 'https://x.com/' }
+  ];
+
+  function renderInternal(t, root) {
+    switch (t.internal) {
+      case 'settings': return renderSettings(root);
+      case 'history': return renderHistory(root);
+      case 'bookmarks': return renderBookmarks(root);
+      default: return renderNewTab(root);
+    }
+  }
+
+  /* ---------------- New Tab ---------------- */
+  function renderNewTab(root) {
+    const eng = currentEngine();
+    const wrap = el('div', 'nt-wrap');
+    const logo = el('img', 'nt-logo');
+    logo.src = ICON; logo.alt = 'Superwork';
+    wrap.appendChild(logo);
+
+    const search = el('div', 'nt-search');
+    const sIco = svgIcon(ICONS.search, 20);
+    const input = el('input');
+    input.type = 'text';
+    input.placeholder = 'Search ' + eng.name + ' or type a URL';
+    input.spellcheck = false;
+    const engTag = el('span', 'nt-engine', eng.name);
+    search.append(sIco, input, engTag);
+    search.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); if (input.value.trim()) { input.blur(); navigate(input.value.trim()); } }
+    });
+    wrap.appendChild(search);
+
+    const grid = el('div', 'nt-links');
+    const links = loadJSON(LS.links, null) || DEFAULT_LINKS.slice();
+    links.forEach(l => grid.appendChild(quickLink(l)));
+    const add = el('button', 'ql ql-add');
+    add.innerHTML = '<img src="' + ICON + '" alt=""><span>Add</span>';
+    add.addEventListener('click', () => promptAddLink());
+    grid.appendChild(add);
+    wrap.appendChild(grid);
+
+    if (!loadJSON(LS.welcome, false)) {
+      const note = el('div', 'nt-note');
+      note.innerHTML = '<b>Welcome to Superwork</b> — a real proxy engine, so pages load fully, buttons work and sites behave natively. ' +
+        'Pick your default search engine in <a href="superwork://settings">Settings</a>.';
+      const dismiss = el('button', 'btn-line', 'Got it');
+      dismiss.style.marginTop = '10px';
+      dismiss.addEventListener('click', () => { saveJSON(LS.welcome, true); note.remove(); });
+      note.appendChild(dismiss);
+      wrap.appendChild(note);
+    }
+    root.appendChild(wrap);
+    setTimeout(() => input.focus(), 60);
+  }
+
+  function quickLink(l) {
+    const b = el('button', 'ql');
+    const img = document.createElement('img');
+    img.src = faviconFor(l.u); img.alt = '';
+    img.loading = 'lazy';
+    img.onerror = () => { img.src = ICON; };
+    const s = el('span', '', l.t);
+    b.append(img, s);
+    const x = el('span', 'ql-x', '✕');
+    x.title = 'Remove';
+    x.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const links = loadJSON(LS.links, null) || DEFAULT_LINKS.slice();
+      saveJSON(LS.links, links.filter(k => k.u !== l.u));
+      b.remove();
+    });
+    b.appendChild(x);
+    b.addEventListener('click', () => navigate(l.u));
+    return b;
+  }
+
+  function promptAddLink(presetUrl, presetTitle) {
+    dialog('Add shortcut', [
+      { label: 'Name', id: 'f-name', value: presetTitle || '' },
+      { label: 'URL', id: 'f-url', value: presetUrl || 'https://' }
+    ], (vals) => {
+      let u = (vals['f-url'] || '').trim();
+      if (!u) return;
+      if (!/^https?:\/\//i.test(u) && !isUrlLike(u)) return;
+      if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+      const links = loadJSON(LS.links, null) || DEFAULT_LINKS.slice();
+      if (links.some(k => k.u === u)) { toast('Already added'); return; }
+      links.push({ t: (vals['f-name'] || '').trim() || u.replace(/^https?:\/\//, '').split('/')[0], u });
+      saveJSON(LS.links, links);
+      const t = tab();
+      if (t && t.internal === 'newtab') { t.viewEl.innerHTML = ''; populateTab(t); }
+    });
+  }
+
+  /* ---------------- Settings ---------------- */
+  /* v7: re-renders pass the .set-wrap itself — reuse it instead of
+     nesting a fresh padded wrapper inside the old one (that is
+     what made the menu thinner on every engine click) */
+  function settingsRoot(root) {
+    return (root && root.classList && root.classList.contains('set-wrap')) ? root : el('div', 'set-wrap');
+  }
+  function renderSettings(root) {
+    const s = settings();
+    const wrap = settingsRoot(root);
+    wrap.innerHTML = '';
+    wrap.appendChild(el('h1', 'set-h', 'Settings'));
+
+    /* --- Connection --- */
+    const conn = el('div', 'set-sec');
+    conn.appendChild(el('h4', '', 'Connection'));
+    conn.appendChild(el('div', 'set-row',
+      '<div class="t">Worker</div><div class="s">Sites load through this Cloudflare Worker (pure API proxy).</div>'));
+    {
+      const wRow = el('div', 'set-row');
+      const wBox = el('div', 'grow');
+      wBox.appendChild(el('div', 't', 'Worker URL'));
+      wBox.appendChild(el('div', 's', 'Your deployed worker, e.g. https://superwork.yourname.workers.dev'));
+      const wInput = el('input', 'set-input');
+      wInput.type = 'text'; wInput.value = savedWorker(); wInput.placeholder = 'https://…workers.dev';
+      wInput.spellcheck = false;
+      wInput.style.width = 'min(300px, 60vw)';
+      wRow.append(wBox, wInput);
+      conn.appendChild(wRow);
+      const tRow = el('div', 'set-row');
+      const testBtn = el('button', 'btn-line', 'Test & save');
+      testBtn.addEventListener('click', async () => {
+        const u = normalizeWorkerUrl(wInput.value);
+        if (!u) { toast('Enter a worker URL'); return; }
+        testBtn.textContent = 'Testing…';
+        const j = await testWorker(u);
+        testBtn.textContent = 'Test & save';
+        if (j) {
+          try { localStorage.setItem(LS_WORKER, u); } catch (e) { }
+          WORKER = u;
+          testBtn.textContent = 'Connected · v' + j.version;
+          toast('Worker saved');
+          syncJar();
+        } else {
+          testBtn.textContent = 'Unreachable — check the URL';
+        }
+      });
+      tRow.appendChild(testBtn);
+      conn.appendChild(tRow);
+    }
+    wrap.appendChild(conn);
+
+    /* --- Search engine section --- */
+    const sec = el('div', 'set-sec');
+    sec.appendChild(el('h4', '', 'Search engine'));
+    sec.appendChild(el('p', 'set-desc',
+      'Used by the address bar, the new tab page and search suggestions.'));
+    const current = localStorage.getItem(LS.engine) || 'duckduckgo';
+    allEngines().forEach(e => {
+      const row = el('button', 'radio-row');
+      row.type = 'button';
+      const r = el('input');
+      r.type = 'radio'; r.name = 'engine'; r.checked = e.id === current;
+      const box = el('div', 'grow');
+      box.appendChild(el('div', 't', e.name + (e.custom ? ' (custom)' : '')));
+      box.appendChild(el('div', 's', e.url.replace('%s', '…')));
+      row.append(r, box);
+      row.addEventListener('click', () => {
+        localStorage.setItem(LS.engine, e.id);
+        renderSettings(wrap);
+        toast('Search engine: ' + e.name);
+      });
+      sec.appendChild(row);
+    });
+    /* add custom engine */
+    const addRow = el('div', 'set-row');
+    const addBtn = el('button', 'btn-line', '＋ Add custom engine');
+    addBtn.addEventListener('click', () => {
+      dialog('Custom search engine', [
+        { label: 'Name', id: 'f-name', value: '' },
+        { label: 'URL with %s for the query', id: 'f-url', value: 'https://www.example.com/search?q=%s' }
+      ], (vals) => {
+        const name = (vals['f-name'] || '').trim();
+        const url = (vals['f-url'] || '').trim();
+        if (!name || url.indexOf('%s') < 0) { toast('URL must contain %s'); return; }
+        const custom = loadJSON(LS.engines, []);
+        custom.push({ id: 'custom-' + Date.now(), name, url, suggest: null, home: url.split('?')[0], custom: true });
+        saveJSON(LS.engines, custom);
+        renderSettings(wrap);
+      });
+    });
+    addRow.appendChild(addBtn);
+    sec.appendChild(addRow);
+    /* v6: what loads when the app opens / a new tab is created */
+    sec.appendChild(toggleRow(
+      'What loads when you open Superwork or tap New tab — the built-in search bar, or your search engine\u2019s own website (loaded through the proxy). Searches from the address bar always open the results page.',
+      'On open', 'openWith',
+      [['newtab', 'Default search bar'], ['engine', 'Search engine website']],
+      s.openWith || 'newtab', (v) => saveSettings({ openWith: v })));
+    /* remove custom engines */
+    loadJSON(LS.engines, []).forEach(e => {
+      const row = el('div', 'set-row');
+      row.appendChild(el('div', 'grow', '<div class="t">' + esc(e.name) + ' (custom)</div>'));
+      const rm = el('button', 'btn-danger', 'Remove');
+      rm.addEventListener('click', () => {
+        saveJSON(LS.engines, loadJSON(LS.engines, []).filter(x => x.id !== e.id));
+        if ((localStorage.getItem(LS.engine) || '') === e.id) localStorage.setItem(LS.engine, 'duckduckgo');
+        renderSettings(wrap);
+      });
+      row.appendChild(rm);
+      sec.appendChild(row);
+    });
+    wrap.appendChild(sec);
+
+    /* --- Downloads (v6) --- */
+    const dlsec = el('div', 'set-sec');
+    dlsec.appendChild(el('h4', '', 'Downloads'));
+    {
+      const dlist = el('div');
+      dlist.id = 'dl-list';
+      const items = dlMeta().slice().reverse();
+      if (!items.length) {
+        dlsec.appendChild(el('div', 'set-desc',
+          'Files you download are saved to your device the moment they finish, and the last ' + DL_MAX +
+          ' are also kept here so you can save any of them again.'));
+      } else {
+        items.forEach(it => {
+          const row = el('div', 'set-row');
+          const ico = el('div', 'dl-row-ico');
+          ico.appendChild(svgIcon(ICONS.download, 20));
+          const box = el('div', 'grow');
+          box.appendChild(el('div', 't', esc(it.name || 'download')));
+          const sub = fmtSize(it.size) + ' · ' + new Date(it.ts || Date.now()).toLocaleDateString();
+          box.appendChild(el('div', 's', sub));
+          const act = el('div', 'dl-act');
+          const saveBtn = el('button', 'btn-line', 'Save again');
+          saveBtn.addEventListener('click', () => reSaveDownload(it));
+          const rmBtn = el('button', 'btn-danger', 'Remove');
+          rmBtn.addEventListener('click', () => removeDownload(it.id));
+          act.append(saveBtn, rmBtn);
+          row.append(ico, box, act);
+          dlist.appendChild(row);
+        });
+        dlsec.appendChild(dlist);
+        const clrRow = el('div', 'set-row');
+        const clr = el('button', 'btn-danger', 'Clear all');
+        clr.addEventListener('click', () => { dlClearAll(); refreshDownloadsSection(); });
+        clrRow.appendChild(clr);
+        dlsec.appendChild(clrRow);
+        dlsec.appendChild(el('div', 'set-desc',
+          'Keeps the last ' + DL_MAX + ' files. Every download is also saved to your device\u2019s Downloads the moment it finishes.'));
+      }
+    }
+    wrap.appendChild(dlsec);
+
+    /* --- Appearance --- */
+    const ap = el('div', 'set-sec');
+    ap.appendChild(el('h4', '', 'Appearance'));
+    ap.appendChild(toggleRow('Dark theme follows your system by default.', 'Theme', 'theme', [
+      ['system', 'System'], ['light', 'Light'], ['dark', 'Dark']
+    ], s.theme, (v) => saveSettings({ theme: v })));
+    ap.appendChild(boolRow('Show home button', 'Adds a home button next to the address bar.', s.showHome, (v) => saveSettings({ showHome: v })));
+    ap.appendChild(toggleRow(
+      'Show tabs in a strip on top, or hide the strip and switch tabs with a button (like mobile Chrome).',
+      'Tab switcher', 'tabUi',
+      [['strip', 'Tab strip (top)'], ['button', 'Tabs button']],
+      s.tabUi || 'strip', (v) => saveSettings({ tabUi: v })));
+    wrap.appendChild(ap);
+
+    /* --- General --- */
+    const gen = el('div', 'set-sec');
+    gen.appendChild(el('h4', '', 'General'));
+    const hpRow = el('div', 'set-row');
+    const hpBox = el('div', 'grow');
+    hpBox.appendChild(el('div', 't', 'Homepage'));
+    hpBox.appendChild(el('div', 's', 'Opened by the home button (blank = New Tab page).'));
+    const hpInput = el('input', 'set-input');
+    hpInput.type = 'text'; hpInput.value = s.homepage || ''; hpInput.placeholder = 'https://…';
+    hpInput.style.width = 'min(300px, 60vw)';
+    hpInput.addEventListener('change', () => saveSettings({ homepage: hpInput.value.trim() }));
+    hpRow.append(hpBox, hpInput);
+    gen.appendChild(hpRow);
+    gen.appendChild(boolRow('Block ads & trackers', 'Faster pages, less clutter. Blocks a built-in list of ~300 known ad/tracker hosts.', s.blockAds, (v) => {
+      saveSettings({ blockAds: v });
+      syncJar();
+    }));
+    gen.appendChild(boolRow('Continue where you left off', 'Restore your open tabs when Superwork starts.', s.startup === 'restore', (v) => saveSettings({ startup: v ? 'restore' : 'newtab' })));
+    wrap.appendChild(gen);
+
+    /* --- Privacy --- */
+    const priv = el('div', 'set-sec');
+    priv.appendChild(el('h4', '', 'Privacy'));
+    const cRow = el('div', 'set-row');
+    cRow.appendChild(el('div', 'grow', '<div class="t">Site data &amp; cookies</div><div class="s">Clears proxy cookies and per-site storage (logs you out of proxied sites).</div>'));
+    const cBtn = el('button', 'btn-danger', 'Clear');
+    cBtn.addEventListener('click', () => {
+      confirmDlg('Clear site data?', 'This signs you out of all proxied sites.', () => {
+        try { localStorage.removeItem(LS_JAR); } catch (e) { }
+        syncJar({ clear: true, cookies: [] });
+        clearSiteStorage();
+        toast('Site data cleared');
+      });
+    });
+    cRow.appendChild(cBtn);
+    priv.appendChild(cRow);
+    const hRow = el('div', 'set-row');
+    hRow.appendChild(el('div', 'grow', '<div class="t">Browsing history</div><div class="s">Clears the history recorded in Superwork.</div>'));
+    const hBtn = el('button', 'btn-danger', 'Clear');
+    hBtn.addEventListener('click', () => confirmDlg('Clear history?', 'This cannot be undone.', () => {
+      saveJSON(LS.history, []); toast('History cleared');
+      if (tab() && tab().internal === 'history') { tab().viewEl.innerHTML = ''; populateTab(tab()); }
+    }));
+    hRow.appendChild(hBtn);
+    priv.appendChild(hRow);
+    wrap.appendChild(priv);
+
+    /* --- About --- */
+    const about = el('div', 'set-sec');
+    about.appendChild(el('h4', '', 'About'));
+    const aRow = el('div', 'set-row');
+    aRow.appendChild(el('div', 'grow',
+      '<div class="t">Superwork ' + APP_VERSION + '</div>' +
+      '<div class="s">A modern rebuild of kadharriminecraft/Superwork (Relay). ' +
+      'Backend: your own Cloudflare Worker (pure API proxy) — everything runs on it.</div>'));
+    const ping = el('button', 'btn-line', 'Check connection');
+    ping.addEventListener('click', async () => {
+      ping.textContent = 'Checking…';
+      const j = await testWorker(WORKER || location.origin);
+      ping.textContent = j ? ('Connected' + (j.colo ? ' · ' + j.colo : '') + ' · v' + j.version) : 'Worker unreachable';
+    });
+    aRow.appendChild(ping);
+    about.appendChild(aRow);
+    wrap.appendChild(about);
+
+    if (wrap !== root) root.appendChild(wrap);
+  }
+
+  function toggleRow(desc, label, key, options, value, onChange) {
+    const row = el('div', 'set-row');
+    const box = el('div', 'grow');
+    box.appendChild(el('div', 't', label));
+    box.appendChild(el('div', 's', desc));
+    const sel = el('select', 'set-select');
+    options.forEach(([v, name]) => {
+      const o = el('option', '', name);
+      o.value = v;
+      if (v === value) o.selected = true;
+      sel.appendChild(o);
+    });
+    sel.addEventListener('change', () => onChange(sel.value));
+    row.append(box, sel);
+    return row;
+  }
+  function boolRow(title, desc, value, onChange) {
+    const row = el('div', 'set-row');
+    const box = el('div', 'grow');
+    box.appendChild(el('div', 't', title));
+    box.appendChild(el('div', 's', desc));
+    const sw = el('label', 'switch');
+    const input = el('input');
+    input.type = 'checkbox'; input.checked = !!value;
+    input.addEventListener('change', () => onChange(input.checked));
+    sw.append(input, el('i'));
+    row.append(box, sw);
+    return row;
+  }
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* ---------------- History ---------------- */
+  function renderHistory(root) {
+    const wrap = settingsRoot(root);
+    wrap.innerHTML = '';
+    wrap.appendChild(el('h1', 'set-h', 'History'));
+    const bar = el('div', 'list-search');
+    bar.appendChild(svgIcon(ICONS.search, 18));
+    const input = el('input');
+    input.type = 'text'; input.placeholder = 'Search history'; input.spellcheck = false;
+    bar.appendChild(input);
+    const clearBtn = el('button', 'btn-danger', 'Clear all');
+    clearBtn.style.marginLeft = '10px';
+    clearBtn.addEventListener('click', () => confirmDlg('Clear history?', 'This cannot be undone.', () => {
+      saveJSON(LS.history, []);
+      renderHistory(wrap);
+    }));
+    bar.appendChild(clearBtn);
+    wrap.appendChild(bar);
+
+    const listWrap = el('div');
+    wrap.appendChild(listWrap);
+    const draw = () => {
+      listWrap.innerHTML = '';
+      const q = input.value.trim().toLowerCase();
+      const hist = loadJSON(LS.history, []).slice().reverse()
+        .filter(h => !q || (h.url || '').toLowerCase().includes(q) || (h.title || '').toLowerCase().includes(q));
+      if (!hist.length) { listWrap.appendChild(el('div', 'empty-note', 'No history yet.')); return; }
+      const groups = new Map();
+      hist.forEach(h => {
+        const day = new Date(h.ts).toDateString();
+        if (!groups.has(day)) groups.set(day, []);
+        groups.get(day).push(h);
+      });
+      groups.forEach((items, day) => {
+        const g = el('div', 'hgroup');
+        g.appendChild(el('div', 'hday', day));
+        items.forEach(h => {
+          const row = el('button', 'hrow');
+          row.type = 'button';
+          const img = document.createElement('img');
+          img.src = h.favicon || faviconFor(h.url); img.alt = '';
+          img.loading = 'lazy';
+          img.onerror = () => { img.src = ICON; };
+          const time = el('span', 'h-time', new Date(h.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+          const title = el('span', 'h-title', h.title || h.url);
+          const url = el('span', 'h-url', h.url || '');
+          const x = el('span', 'h-x', '');
+          x.appendChild(svgIcon(ICONS.close, 14));
+          row.append(img, time, title, url, x);
+          row.addEventListener('click', (e) => {
+            if (x.contains(e.target)) return;
+            navigate(h.url);
+          });
+          x.addEventListener('click', (e) => {
+            e.stopPropagation();
+            saveJSON(LS.history, loadJSON(LS.history, []).filter(k => k.ts !== h.ts || k.url !== h.url));
+            draw();
+          });
+          g.appendChild(row);
+        });
+        listWrap.appendChild(g);
+      });
+    };
+    input.addEventListener('input', draw);
+    draw();
+    if (wrap !== root) root.appendChild(wrap);
+  }
+
+  /* ---------------- Bookmarks ---------------- */
+  function renderBookmarks(root) {
+    const wrap = settingsRoot(root);
+    wrap.innerHTML = '';
+    const h = el('h1', 'set-h', 'Bookmarks');
+    h.innerHTML = 'Bookmarks <span class="bm-star">★</span>';
+    wrap.appendChild(h);
+    const bms = loadJSON(LS.bookmarks, []);
+    if (!bms.length) {
+      wrap.appendChild(el('div', 'empty-note', 'No bookmarks yet — tap the ☆ in the address bar.'));
+      if (wrap !== root) root.appendChild(wrap);
+      return;
+    }
+    const list = el('div', 'hgroup');
+    bms.slice().reverse().forEach(b => {
+      const row = el('button', 'hrow');
+      row.type = 'button';
+      const img = document.createElement('img');
+      img.src = b.favicon || faviconFor(b.url); img.alt = '';
+      img.loading = 'lazy';
+      img.onerror = () => { img.src = ICON; };
+      const title = el('span', 'h-title', b.title || b.url);
+      const url = el('span', 'h-url', b.url);
+      const x = el('span', 'h-x', '');
+      x.appendChild(svgIcon(ICONS.close, 14));
+      row.append(img, title, url, x);
+      row.addEventListener('click', (e) => {
+        if (x.contains(e.target)) return;
+        navigate(b.url);
+      });
+      x.addEventListener('click', (e) => {
+        e.stopPropagation();
+        saveJSON(LS.bookmarks, loadJSON(LS.bookmarks, []).filter(k => k.url !== b.url));
+        renderBookmarks(wrap);
+      });
+      list.appendChild(row);
+    });
+    wrap.appendChild(list);
+    if (wrap !== root) root.appendChild(wrap);
+  }
+
+  /* ============================================================
+     Tab grid overlay (v6 — simple 2-column grid: each cell has an
+     X in its top-right, a larger + sits top-right of the header,
+     with a Close-all button beside it)
+     ============================================================ */
+  function openTabGrid() {
+    const grid = $('#tabgrid');
+    const list = $('#tg-list');
+    list.innerHTML = '';
+    tabs.forEach(t => {
+      const card = el('button', 'tg-card' + (t.id === activeId ? ' sel' : ''));
+      card.type = 'button';
+      const head = el('div', 'tg-cell-head');
+      const img = document.createElement('img');
+      img.src = t.favicon || faviconFor(t.url || 'https://superwork') || ICON;
+      img.alt = ''; img.loading = 'lazy';
+      img.onerror = () => { img.src = ICON; };
+      const title = el('span', 'tg-cell-title', t.title || 'New Tab');
+      const x = el('span', 'tg-x');
+      x.title = 'Close tab';
+      x.appendChild(svgIcon(ICONS.close, 17));
+      head.append(img, title, x);
+      const thumb = el('div', 'tg-thumb');
+      const big = document.createElement('img');
+      big.src = img.src; big.alt = '';
+      big.onerror = () => { big.src = ICON; };
+      thumb.appendChild(big);
+      let host = 'New Tab';
+      try { if (t.url) host = new URL(t.url).hostname; } catch (e) { }
+      thumb.appendChild(el('span', 'tg-host', host));
+      card.append(head, thumb);
+      card.addEventListener('click', (e) => {
+        if (x.contains(e.target)) return;
+        grid.hidden = true;
+        activateTab(t.id);
+      });
+      x.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeTab(t.id);
+        if (!tabs.length) grid.hidden = true;
+        else openTabGrid();
+      });
+      list.appendChild(card);
+    });
+    $('#tg-count').textContent = tabs.length + (tabs.length === 1 ? ' tab' : ' tabs');
+    grid.hidden = false;
+  }
+  $('#tg-new').addEventListener('click', () => { $('#tabgrid').hidden = true; newTab(newTabPage()); });
+  $('#tg-close-all').addEventListener('click', () => {
+    [...tabs].forEach(t => closeTab(t.id));
+    $('#tabgrid').hidden = true;
+  });
+
+  /* ============================================================
+     Dialogs & toast
+     ============================================================ */
+  function dialog(title, fields, onOk) {
+    const dlg = $('#dlg');
+    $('#dlg-title').textContent = title;
+    const body = $('#dlg-body');
+    body.innerHTML = '';
+    const inputs = {};
+    fields.forEach(f => {
+      const lab = el('label', '', f.label);
+      const inp = el('input');
+      inp.type = 'text'; inp.value = f.value || ''; inp.id = f.id;
+      inputs[f.id] = inp;
+      lab.appendChild(inp);
+      body.appendChild(lab);
+    });
+    dlg.showModal();
+    setTimeout(() => (fields[0] && inputs[fields[0].id] || {}).focus && inputs[fields[0].id].focus(), 50);
+    const ok = $('#dlg-ok'), cancel = $('#dlg-cancel');
+    const done = (okd) => {
+      dlg.close();
+      ok.removeEventListener('click', okH);
+      cancel.removeEventListener('click', cancelH);
+      if (okd) {
+        const vals = {};
+        fields.forEach(f => vals[f.id] = inputs[f.id].value);
+        onOk(vals);
+      }
+    };
+    function okH() { done(true); }
+    function cancelH() { done(false); }
+    ok.addEventListener('click', okH);
+    cancel.addEventListener('click', cancelH);
+    body.addEventListener('keydown', (e) => { if (e.key === 'Enter') done(true); });
+  }
+  function confirmDlg(title, text, onOk) {
+    const dlg = $('#dlg');
+    $('#dlg-title').textContent = title;
+    $('#dlg-body').innerHTML = '<p>' + esc(text) + '</p>';
+    dlg.showModal();
+    const ok = $('#dlg-ok'), cancel = $('#dlg-cancel');
+    const done = (okd) => {
+      dlg.close();
+      ok.removeEventListener('click', okH);
+      cancel.removeEventListener('click', cancelH);
+      if (okd) onOk();
+    };
+    function okH() { done(true); }
+    function cancelH() { done(false); }
+    ok.addEventListener('click', okH);
+    cancel.addEventListener('click', cancelH);
+  }
+  let toastTimer = null;
+  function toast(msg) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.hidden = true; }, 2200);
+  }
+
+  /* ============================================================
+     Site storage clearing (app-side: prefixed localStorage keys)
+     ============================================================ */
+  function clearSiteStorage() {
+    try {
+      const kill = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('sw:')) kill.push(k);
+      }
+      kill.forEach(k => localStorage.removeItem(k));
+    } catch (e) { }
+    if (indexedDB.databases) {
+      indexedDB.databases().then(dbs => {
+        (dbs || []).forEach(d => {
+          if (d.name && (d.name.startsWith('sw_') || d.name.startsWith('superwork-sw'))) {
+            indexedDB.deleteDatabase(d.name);
+          }
+        });
+      }).catch(() => { });
+    }
+  }
+
+  /* ============================================================
+     Theme / chrome toggles / persistence
+     ============================================================ */
+  function applyTheme() {
+    const s = settings();
+    document.documentElement.dataset.theme = s.theme;
+    let meta = document.querySelector('meta[name=theme-color]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'theme-color';
+      document.head.appendChild(meta);
+    }
+    const dark = s.theme === 'dark' || (s.theme === 'system' &&
+      matchMedia('(prefers-color-scheme: dark)').matches);
+    meta.content = dark ? '#202124' : '#ffffff';
+  }
+  function applyChromeToggles() {
+    const s = settings();
+    $('#btn-home').hidden = !s.showHome;
+    const app = $('#app');
+    if (app) app.dataset.tabui = s.tabUi || 'strip';
+    $('#btn-tabs').hidden = (s.tabUi || 'strip') !== 'button';
+    updateTabsBadge();
+  }
+  function updateTabsBadge() {
+    const b = $('#tabs-badge');
+    if (b) b.textContent = String(tabs.length);
+  }
+
+  /* ============================================================
+     Page zoom (v7) — a quick scale control in the 3-dots menu.
+     Applied to every page iframe via CSS `zoom` (Chromium reflows
+     the layout at the scaled viewport, exactly like browser zoom),
+     with a transform+width fallback for engines without it.
+     Persisted in settings; new frames pick it up automatically.
+     ============================================================ */
+  let ZOOM_SUPPORTED = null;
+  function zoomSupported() {
+    if (ZOOM_SUPPORTED !== null) return ZOOM_SUPPORTED;
+    try { ZOOM_SUPPORTED = !!(CSS.supports && CSS.supports('zoom', '1.25')); }
+    catch (e) { ZOOM_SUPPORTED = false; }
+    return ZOOM_SUPPORTED;
+  }
+  function getZoom() {
+    const z = Number(settings().zoom);
+    return (isFinite(z) && z >= 0.5 && z <= 2) ? z : 1;
+  }
+  function applyZoomToFrame(f, z) {
+    try {
+      if (zoomSupported()) {
+        f.style.zoom = (z === 1) ? '' : String(z);
+        f.style.transform = '';
+        f.style.width = '';
+        f.style.height = '';
+        f.style.transformOrigin = '';
+      } else if (z === 1) {
+        f.style.zoom = '';
+        f.style.transform = '';
+        f.style.width = '';
+        f.style.height = '';
+        f.style.transformOrigin = '';
+      } else {
+        f.style.zoom = '';
+        f.style.transformOrigin = '0 0';
+        f.style.transform = 'scale(' + z + ')';
+        f.style.width = (100 / z) + '%';
+        f.style.height = (100 / z) + '%';
+      }
+    } catch (e) { }
+  }
+  function applyZoomAll() {
+    const z = getZoom();
+    tabs.forEach(t => { if (t.iframe) applyZoomToFrame(t.iframe, z); });
+  }
+  function setZoom(z) {
+    z = Math.min(2, Math.max(0.5, Math.round(z * 10) / 10));
+    saveSettings({ zoom: z });
+    applyZoomAll();
+    return z;
+  }
+  function persistTabs() {
+    const data = tabs.map(t => ({
+      url: t.url, internal: t.internal, kind: t.kind, title: t.title, favicon: t.favicon
+    }));
+    saveJSON(LS.tabs, { tabs: data, active: tabs.findIndex(t => t.id === activeId) });
+  }
+
+  /* ============================================================
+     Keyboard shortcuts (Chrome-like)
+     ============================================================ */
+  document.addEventListener('keydown', (e) => {
+    const mod = e.ctrlKey || e.metaKey;
+    if (mod && e.key === 't') { e.preventDefault(); newTab(newTabPage()); }
+    else if (mod && e.key === 'w') { e.preventDefault(); closeTab(activeId); }
+    else if (mod && e.shiftKey && e.key.toLowerCase() === 't') {
+      e.preventDefault();
+      const last = closedStack.pop();
+      if (last) newTab(last.url ? { url: last.url } : { internal: last.internal });
+    }
+    else if ((mod && e.key === 'l') || (e.altKey && e.key === 'd')) { e.preventDefault(); omni.focus(); omni.select(); }
+    else if (mod && e.key === 'r') { e.preventDefault(); reloadTab(); }
+    else if (e.key === 'F5') { e.preventDefault(); reloadTab(); }
+    else if (mod && e.key === 'f') { e.preventDefault(); openFind(); }
+    else if (mod && e.key === 'd') { e.preventDefault(); toggleBookmark(); }
+    else if (e.altKey && e.key === 'ArrowLeft') { e.preventDefault(); navCmd(tab(), 'back', -1); }
+    else if (e.altKey && e.key === 'ArrowRight') { e.preventDefault(); navCmd(tab(), 'fwd', 1); }
+    else if (e.key === 'Escape') { closeTopOverlay(); }
+    else if (mod && e.key === 'Tab') {
+      e.preventDefault();
+      if (tabs.length > 1) {
+        const i = tabs.findIndex(t => t.id === activeId);
+        activateTab(tabs[(i + (e.shiftKey ? -1 : 1) + tabs.length) % tabs.length].id);
+      }
+    }
+  });
+
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+
+  /* ============================================================
+     Boot
+     ============================================================ */
+  async function boot() {
+    applyTheme();
+    applyChromeToggles();
+
+    /* restore session if requested */
+    const s = settings();
+    let restored = false;
+    if (s.startup === 'restore') {
+      const sess = loadJSON(LS.tabs, null);
+      if (sess && Array.isArray(sess.tabs) && sess.tabs.length) {
+        sess.tabs.forEach((t, i) => {
+          const opts = t.kind === 'web' && t.url
+            ? { url: t.url, title: t.title, favicon: t.favicon, lazy: i !== sess.active }
+            : { internal: t.internal || 'newtab', lazy: i !== sess.active };
+          newTab(opts);
+        });
+        restored = true;
+        /* v6: "open with the engine website" — if the restored
+           session has no real pages open, start on the engine site
+           instead of a bare New Tab */
+        if ((s.openWith || 'newtab') === 'engine' && !tabs.some(x => x.kind === 'web' && x.url)) {
+          tabs.forEach(x => { try { x.viewEl.remove(); } catch (e) { } });
+          tabs = []; activeId = null;
+          restored = false;
+        }
+      }
+    }
+    if (!restored) newTab(newTabPage());
+  }
+
+  /* ============================================================
+     Bootstrap — connect to the configured worker (first run
+     shows the setup screen), then start the browser.
+     ============================================================ */
+  function startApp() {
+    boot();
+    /* v6: the phone back button drives in-app navigation */
+    armBackGuard();
+    /* v6: open the downloads store (IndexedDB when available) */
+    dlIdbInit();
+    if (WORKER) {
+      /* keep the worker's jar warm and absorb server-set cookies */
+      syncJar();
+      setInterval(() => syncJar(), 45000);
+    }
+  }
+
+  function showSetup() {
+    const setup = $('#setup');
+    if (!setup) { boot(); return; }
+    setup.hidden = false;
+    const input = $('#setup-url');
+    const btn = $('#setup-connect');
+    const msg = $('#setup-msg');
+    const logo = $('#setup-logo');
+    if (logo) logo.src = ICON;
+    const connect = async () => {
+      const u = normalizeWorkerUrl(input.value);
+      if (!u) { msg.textContent = 'Enter your worker URL.'; return; }
+      btn.disabled = true; btn.textContent = 'Connecting…'; msg.textContent = '';
+      const j = await testWorker(u);
+      btn.disabled = false; btn.textContent = 'Connect';
+      if (j) {
+        try { localStorage.setItem(LS_WORKER, u); } catch (e) { }
+        WORKER = u;
+        setup.hidden = true;
+        toast('Connected');
+        startApp();
+      } else {
+        msg.textContent = 'Could not reach that worker. Check the URL and that it is deployed.';
+      }
+    };
+    btn.addEventListener('click', connect);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') connect(); });
+    setTimeout(() => input.focus(), 80);
+  }
+
+  {
+    const w = savedWorker();
+    if (w) {
+      testWorker(w).then(j => {
+        if (j) { WORKER = w; startApp(); }
+        else showSetup();
+      });
+    } else {
+      showSetup();
+    }
+  }
+
+  /* clean up super-stale history once a day */
+  try {
+    const last = localStorage.getItem('superwork:lastTrim');
+    if (!last || Date.now() - Number(last) > 864e5) {
+      localStorage.setItem('superwork:lastTrim', String(Date.now()));
+      let hist = loadJSON(LS.history, []);
+      if (hist.length > 2000) saveJSON(LS.history, hist.slice(-2000));
+    }
+  } catch (e) { }
+})();
+
+
+</script>
+</body>
+</html>
